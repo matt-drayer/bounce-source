@@ -1,0 +1,78 @@
+table:
+  name: event_group_sequences
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: nextSequence
+    using:
+      foreign_key_constraint_on: next_sequence_id
+array_relationships:
+  - name: pools
+    using:
+      foreign_key_constraint_on:
+        column: sequence_id
+        table:
+          name: event_group_pools
+          schema: public
+  - name: seeding
+    using:
+      foreign_key_constraint_on:
+        column: event_group_sequence_id
+        table:
+          name: event_group_sequence_seeding
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - competition_format
+        - complete_reason
+        - created_at
+        - deleted_at
+        - group_id
+        - id
+        - is_sequence_complete
+        - next_sequence_id
+        - order
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - competition_format
+        - complete_reason
+        - created_at
+        - deleted_at
+        - group_id
+        - id
+        - is_sequence_complete
+        - next_sequence_id
+        - order
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - complete_reason
+        - is_sequence_complete
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - group:
+              event:
+                host_user_id:
+                  _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

@@ -1,0 +1,84 @@
+table:
+  name: event_teams
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+array_relationships:
+  - name: gamesWon
+    using:
+      foreign_key_constraint_on:
+        column: winning_team_id
+        table:
+          name: event_match_games
+          schema: public
+  - name: groupRegistrations
+    using:
+      foreign_key_constraint_on:
+        column: team_id
+        table:
+          name: event_group_registrations
+          schema: public
+  - name: matches
+    using:
+      foreign_key_constraint_on:
+        column: team_id
+        table:
+          name: event_matches_teams
+          schema: public
+  - name: matchesLost
+    using:
+      foreign_key_constraint_on:
+        column: losing_team_id
+        table:
+          name: event_matches
+          schema: public
+  - name: matchesWon
+    using:
+      foreign_key_constraint_on:
+        column: winning_team_id
+        table:
+          name: event_matches
+          schema: public
+  - name: members
+    using:
+      foreign_key_constraint_on:
+        column: team_id
+        table:
+          name: event_team_members
+          schema: public
+  - name: pools
+    using:
+      foreign_key_constraint_on:
+        column: team_id
+        table:
+          name: event_pools_teams
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""

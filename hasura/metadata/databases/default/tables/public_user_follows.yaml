@@ -1,0 +1,69 @@
+table:
+  name: user_follows
+  schema: public
+object_relationships:
+  - name: followedProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          followed_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: followerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          follower_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        follower_user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - followed_user_id
+        - follower_user_id
+        - status
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - status
+        - created_at
+        - updated_at
+        - followed_user_id
+        - follower_user_id
+        - id
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - status
+        - created_at
+        - updated_at
+        - followed_user_id
+        - follower_user_id
+        - id
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - status
+      filter:
+        _or:
+          - followed_user_id:
+              _eq: X-Hasura-User-Id
+          - follower_user_id:
+              _eq: X-Hasura-User-Id
+      check: null

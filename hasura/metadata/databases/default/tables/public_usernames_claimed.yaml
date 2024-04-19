@@ -1,0 +1,18 @@
+table:
+  name: usernames_claimed
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - username
+      filter: {}
+      limit: 1
+  - role: user
+    permission:
+      columns:
+        - id
+        - username
+      filter: {}
+      limit: 1

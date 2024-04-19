@@ -1,0 +1,36 @@
+table:
+  name: user_terms_of_service
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - accepted_at
+        - ip
+        - user_agent
+        - user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - ip
+        - user_agent
+        - accepted_at
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - user_id
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true

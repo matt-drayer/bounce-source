@@ -1,0 +1,14 @@
+overwrite: true
+schema:
+  - https://api-staging.bounce.game/v1/graphql:
+      headers:
+        X-Hasura-Admin-Secret: thisisasupersecretsignaturethisisasupersecretsignaturethisisasupersecretsignature
+        X-Hasura-Role: user
+        Content-Type: application/json
+documents: 'src/{components,gql,screens,pages,layouts,hooks,context}/**/*.{ts,tsx}'
+generates:
+  src/types/generated/client.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

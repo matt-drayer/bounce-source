@@ -1,0 +1,43 @@
+table:
+  name: user_notifications
+  schema: public
+object_relationships:
+  - name: notificationDetails
+    using:
+      foreign_key_constraint_on: user_notification_detail_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - user_id
+        - status
+        - read_at
+        - user_notification_detail_id
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+        - read_at
+        - status
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true
+      check: null

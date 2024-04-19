@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1012045644639-d7pq439kmes335jsjb921lori487uu1o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1012045644639-d7pq439kmes335jsjb921lori487uu1o</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDGM-l3TDHn_eLae7dtQlqVCuy7bwrcJXA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1012045644639</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>love.advantage.app</string>
+	<key>PROJECT_ID</key>
+	<string>advantage-team-prod</string>
+	<key>STORAGE_BUCKET</key>
+	<string>advantage-team-prod.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1012045644639:ios:049318a574caf9cd3facea</string>
+	<key>DATABASE_URL</key>
+	<string>https://advantage-team-prod-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

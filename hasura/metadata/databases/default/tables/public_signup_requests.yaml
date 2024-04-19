@@ -1,0 +1,61 @@
+table:
+  name: signup_requests
+  schema: public
+insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+        - account_type
+        - city
+        - city_id
+        - country
+        - email
+        - event_organizer_account_type
+        - full_details
+        - full_name
+        - ip
+        - latitude
+        - longitude
+        - phone_number
+        - platform
+        - preferred_name
+        - region
+        - timezone
+        - username
+        - zip
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - account_type
+        - city
+        - city_id
+        - country
+        - email
+        - event_organizer_account_type
+        - full_details
+        - full_name
+        - ip
+        - latitude
+        - longitude
+        - phone_number
+        - platform
+        - preferred_name
+        - region
+        - timezone
+        - username
+        - zip
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+      filter: {}
+      limit: 1
+  - role: user
+    permission:
+      columns:
+        - id
+      filter: {}
+      limit: 1

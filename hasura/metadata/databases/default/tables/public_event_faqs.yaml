@@ -1,0 +1,65 @@
+table:
+  name: event_faqs
+  schema: public
+object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        event:
+          host_user_id:
+            _eq: X-Hasura-User-Id
+      columns:
+        - answer
+        - event_id
+        - question
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - answer
+        - question
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - answer
+        - question
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - answer
+        - question
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - event:
+              host_user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

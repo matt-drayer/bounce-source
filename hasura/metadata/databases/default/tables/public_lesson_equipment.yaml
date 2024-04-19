@@ -1,0 +1,62 @@
+table:
+  name: lesson_equipment
+  schema: public
+object_relationships:
+  - name: lesson
+    using:
+      foreign_key_constraint_on: lesson_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        lesson:
+          owner_user_id:
+            _eq: X-Hasura-User-Id
+      columns:
+        - custom_name
+        - equipment_option_id
+        - lesson_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - custom_name
+        - equipment_option_id
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - lesson_id
+      filter:
+        deleted_at:
+          _is_null: true
+  - role: user
+    permission:
+      columns:
+        - custom_name
+        - equipment_option_id
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - lesson_id
+      filter:
+        deleted_at:
+          _is_null: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+      filter:
+        lesson:
+          owner_user_id:
+            _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        lesson:
+          owner_user_id:
+            _eq: X-Hasura-User-Id

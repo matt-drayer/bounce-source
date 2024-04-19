@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- alter table "public"."lessons" add column "payment_fulfillment_channel" text
+--  not null default 'ON_PLATFORM';

@@ -1,0 +1,5 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- INSERT INTO payment_fulfillment_channels (value) VALUES
+--   ('ON_PLATFORM'),
+--   ('OFF_PLATFORM');

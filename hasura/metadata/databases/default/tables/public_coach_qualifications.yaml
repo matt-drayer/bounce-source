@@ -1,0 +1,28 @@
+table:
+  name: coach_qualifications
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - display_key
+        - group_id
+        - id
+        - name
+        - order
+        - updated_at
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - display_key
+        - group_id
+        - id
+        - name
+        - order
+        - updated_at
+      filter: {}

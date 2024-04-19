@@ -1,0 +1,53 @@
+table:
+  name: event_round_matches
+  schema: public
+object_relationships:
+  - name: court
+    using:
+      foreign_key_constraint_on: event_court_id
+  - name: losingTeam
+    using:
+      foreign_key_constraint_on: losing_team_id
+  - name: round
+    using:
+      foreign_key_constraint_on: round_id
+  - name: winningTeam
+    using:
+      foreign_key_constraint_on: winning_team_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - court_number
+        - created_at
+        - deleted_at
+        - event_court_id
+        - id
+        - losing_team_id
+        - round_id
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - court_number
+        - created_at
+        - deleted_at
+        - event_court_id
+        - id
+        - losing_team_id
+        - round_id
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""

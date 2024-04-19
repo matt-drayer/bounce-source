@@ -1,0 +1,3 @@
+import SearchVenueLocationInput from 'components/SearchVenueLocationInput/SearchVenueLocationInput';
+
+export default SearchVenueLocationInput;

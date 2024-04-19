@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- alter table "public"."play_sessions" add column "tennis_rating_scale_id" uuid
+--  null;

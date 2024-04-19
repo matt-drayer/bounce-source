@@ -1,0 +1,74 @@
+table:
+  name: event_group_pools
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: sequence
+    using:
+      foreign_key_constraint_on: sequence_id
+array_relationships:
+  - name: courts
+    using:
+      foreign_key_constraint_on:
+        column: active_event_group_pool_id
+        table:
+          name: event_courts
+          schema: public
+  - name: matches
+    using:
+      foreign_key_constraint_on:
+        column: pool_id
+        table:
+          name: event_matches
+          schema: public
+  - name: rounds
+    using:
+      foreign_key_constraint_on:
+        column: pool_id
+        table:
+          name: event_pool_rounds
+          schema: public
+  - name: teams
+    using:
+      foreign_key_constraint_on:
+        column: pool_id
+        table:
+          name: event_pools_teams
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - ends_at
+        - group_id
+        - id
+        - sequence_id
+        - starts_at
+        - title
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - ends_at
+        - group_id
+        - id
+        - sequence_id
+        - starts_at
+        - title
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+    comment: ""

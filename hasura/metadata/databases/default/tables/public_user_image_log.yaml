@@ -1,0 +1,33 @@
+table:
+  name: user_image_log
+  schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - file_name
+        - path
+        - provider
+        - provider_id
+        - provider_url
+        - user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - file_name
+        - id
+        - path
+        - provider
+        - provider_id
+        - provider_url
+        - updated_at
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      limit: 1

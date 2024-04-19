@@ -1,0 +1,3 @@
+SET check_function_bodies = false;
+INSERT INTO public.tennis_rating_scales (id, created_at, updated_at, deleted_at, short_name, name, minimum, maximum, "order") VALUES ('d61bd267-f5e2-4bde-a2fc-0157f2651170', '2022-09-02 23:07:27.721846+00', '2022-09-02 23:07:27.721846+00', NULL, 'UTR', 'Universal Tennis Rating', 1, 16.5000, 0);
+INSERT INTO public.tennis_rating_scales (id, created_at, updated_at, deleted_at, short_name, name, minimum, maximum, "order") VALUES ('89d08036-8f85-453c-96c8-47441cbb8c10', '2022-09-02 23:09:12.705843+00', '2022-09-02 23:09:12.705843+00', NULL, 'NTRP', 'National Tennis Rating Program', 1.5000, 7, 1);

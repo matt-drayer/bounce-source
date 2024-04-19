@@ -1,0 +1,52 @@
+table:
+  name: countries
+  schema: public
+array_relationships:
+  - name: subdivisions
+    using:
+      foreign_key_constraint_on:
+        column: country_id
+        table:
+          name: country_subdivisions
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - currency
+        - deleted_at
+        - emoji
+        - geometry
+        - id
+        - iso2
+        - iso3
+        - latitude
+        - longitude
+        - name
+        - name_slug
+        - numeric_code
+        - phone_code
+        - slug
+        - updated_at
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - currency
+        - deleted_at
+        - emoji
+        - geometry
+        - id
+        - iso2
+        - iso3
+        - latitude
+        - longitude
+        - name
+        - name_slug
+        - numeric_code
+        - phone_code
+        - slug
+        - updated_at
+      filter: {}

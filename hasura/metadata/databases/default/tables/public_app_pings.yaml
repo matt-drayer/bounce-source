@@ -1,0 +1,59 @@
+table:
+  name: app_pings
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: anonymous
+    permission:
+      check:
+        user_id:
+          _is_null: true
+      columns:
+        - city
+        - country
+        - firebase_id
+        - ip
+        - ip_response
+        - pathname
+        - platform
+        - query_string
+        - region
+        - timezone
+        - user_id
+        - zip
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - city
+        - country
+        - firebase_id
+        - ip
+        - ip_response
+        - pathname
+        - platform
+        - query_string
+        - region
+        - timezone
+        - user_id
+        - zip
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+      filter: {}
+      limit: 1
+  - role: user
+    permission:
+      columns:
+        - id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      limit: 1

@@ -1,0 +1,44 @@
+table:
+  name: event_transaction_items
+  schema: public
+object_relationships:
+  - name: groupRegistration
+    using:
+      foreign_key_constraint_on: group_registration_id
+  - name: registration
+    using:
+      foreign_key_constraint_on: registration_id
+  - name: transaction
+    using:
+      foreign_key_constraint_on: transaction_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - price_unit_amount
+        - refund_unit_amount
+        - total_unit_amount
+        - refunded_by_persona
+        - status
+        - type
+        - created_at
+        - deleted_at
+        - refunded_at
+        - updated_at
+        - group_registration_id
+        - id
+        - registration_id
+        - transaction_id
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - _or:
+              - transaction:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+              - transaction:
+                  seller_user_id:
+                    _eq: X-Hasura-User-Id
+      limit: 50
+    comment: ""

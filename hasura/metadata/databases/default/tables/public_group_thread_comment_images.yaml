@@ -1,0 +1,3 @@
+table:
+  name: group_thread_comment_images
+  schema: public

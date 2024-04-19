@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- DELETE FROM ball_types
+-- WHERE value IN ('ONIX_DURA_FAST_40', 'ONIX_FUSE_G2', 'GAMMA_PHOTON');

@@ -1,0 +1,81 @@
+table:
+  name: event_invitations
+  schema: public
+object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: groupRegistration
+    using:
+      foreign_key_constraint_on: group_registration_id
+  - name: invitedUser
+    using:
+      foreign_key_constraint_on: invited_user_id
+  - name: invitedUserProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          invited_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: senderUser
+    using:
+      foreign_key_constraint_on: sender_user_id
+  - name: senderUserProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          sender_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - sender_user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - event_id
+        - group_id
+        - group_registration_id
+        - invitation_email
+        - invitation_name
+        - sender_user_id
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - event_id
+        - group_id
+        - group_registration_id
+        - id
+        - invitation_email
+        - invitation_name
+        - invited_user_id
+        - sender_user_id
+        - status
+        - updated_at
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - _or:
+              - sender_user_id:
+                  _eq: X-Hasura-User-Id
+              - invited_user_id:
+                  _eq: X-Hasura-User-Id
+      limit: 50
+    comment: ""

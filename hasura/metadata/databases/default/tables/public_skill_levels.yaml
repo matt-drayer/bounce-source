@@ -1,0 +1,26 @@
+table:
+  name: skill_levels
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - display_name
+        - rank
+        - is_displayed
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - is_displayed
+        - rank
+        - display_name
+        - id
+        - created_at
+        - deleted_at
+        - updated_at
+      filter: {}

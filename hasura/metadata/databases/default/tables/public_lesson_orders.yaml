@@ -1,0 +1,80 @@
+table:
+  name: lesson_orders
+  schema: public
+object_relationships:
+  - name: creditCard
+    using:
+      foreign_key_constraint_on: user_credit_card_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_user_id
+  - name: customerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: paymentIntentExternal
+    using:
+      foreign_key_constraint_on: external_stripe_payment_intent_id
+  - name: paymentIntentInternal
+    using:
+      foreign_key_constraint_on: internal_stripe_payment_intent_id
+  - name: seller
+    using:
+      foreign_key_constraint_on: seller_user_id
+  - name: sellerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          seller_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: lesson_order_id
+        table:
+          name: lesson_order_items
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - application_fee_total_unit_amount
+        - created_at
+        - customer_application_fee_unit_amount
+        - customer_user_id
+        - deleted_at
+        - external_stripe_payment_intent_id
+        - id
+        - internal_stripe_payment_intent_id
+        - order_subtotal_unit_amount
+        - order_total_unit_amount
+        - paid_unit_amount
+        - payment_processor
+        - refund_unit_amount
+        - refunded_at
+        - refunded_by_persona
+        - seller_application_fee_unit_amount
+        - seller_user_id
+        - status
+        - stripe_customer_id
+        - stripe_merchant_id
+        - stripe_payment_status
+        - transfer_unit_amount
+        - updated_at
+        - user_credit_card_id
+      filter:
+        _or:
+          - customer_user_id:
+              _eq: X-Hasura-User-Id
+          - seller_user_id:
+              _eq: X-Hasura-User-Id
+      allow_aggregations: true

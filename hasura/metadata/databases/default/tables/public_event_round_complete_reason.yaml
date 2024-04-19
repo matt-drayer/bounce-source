@@ -1,0 +1,4 @@
+table:
+  name: event_round_complete_reason
+  schema: public
+is_enum: true

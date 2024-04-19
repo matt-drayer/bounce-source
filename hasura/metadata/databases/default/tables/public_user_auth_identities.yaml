@@ -1,0 +1,3 @@
+table:
+  name: user_auth_identities
+  schema: public

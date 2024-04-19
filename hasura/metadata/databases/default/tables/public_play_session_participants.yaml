@@ -1,0 +1,70 @@
+table:
+  name: play_session_participants
+  schema: public
+object_relationships:
+  - name: playSession
+    using:
+      foreign_key_constraint_on: play_session_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        playSession:
+          organizer_user_id:
+            _eq: X-Hasura-User-Id
+      columns:
+        - added_at
+        - added_by_persona
+        - added_by_user_id
+        - play_session_id
+        - removed_at
+        - removed_by_persona
+        - status
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - added_at
+        - created_at
+        - deleted_at
+        - id
+        - play_session_id
+        - removed_at
+        - status
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - added_at
+        - created_at
+        - deleted_at
+        - id
+        - play_session_id
+        - removed_at
+        - status
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+      allow_aggregations: true

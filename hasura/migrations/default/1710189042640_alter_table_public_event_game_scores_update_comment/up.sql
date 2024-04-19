@@ -1,0 +1,1 @@
+comment on table "public"."event_game_scores" is E'NOTE: We are currently not using this table, but it was considered as there were many complex game and team structures discussed. For now we are storing scores in event_match_games, but we can backfill this one if needed.';

@@ -1,0 +1,118 @@
+table:
+  name: groups
+  schema: public
+object_relationships:
+  - name: city
+    using:
+      foreign_key_constraint_on: city_id
+  - name: owner
+    using:
+      foreign_key_constraint_on: owner_user_id
+  - name: ownerUserProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          owner_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: groupsPlaySessions
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: groups_play_sessions
+          schema: public
+  - name: members
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_members
+          schema: public
+  - name: playSessions
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: play_sessions
+          schema: public
+  - name: threads
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_threads
+          schema: public
+  - name: venues
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_venues
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - allow_member_invites
+        - allow_member_session_invites
+        - display_owner_contact_info
+        - is_private
+        - skill_level_maximum
+        - skill_level_minimum
+        - access_code
+        - contact_email
+        - contact_message
+        - contact_phone_number
+        - contact_url
+        - cover_photo_url
+        - description
+        - headline
+        - primary_sport
+        - profile_photo_url
+        - slug
+        - title
+        - created_at
+        - deleted_at
+        - updated_at
+        - city_id
+        - id
+        - owner_user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 20
+  - role: user
+    permission:
+      columns:
+        - access_code
+        - allow_member_invites
+        - allow_member_session_invites
+        - city_id
+        - contact_email
+        - contact_message
+        - contact_phone_number
+        - contact_url
+        - cover_photo_url
+        - created_at
+        - deleted_at
+        - description
+        - display_owner_contact_info
+        - headline
+        - id
+        - is_private
+        - owner_user_id
+        - primary_sport
+        - profile_photo_url
+        - skill_level_maximum
+        - skill_level_minimum
+        - slug
+        - title
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50

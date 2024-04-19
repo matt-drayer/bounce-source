@@ -1,0 +1,124 @@
+table:
+  name: event_matches
+  schema: public
+object_relationships:
+  - name: court
+    using:
+      foreign_key_constraint_on: event_court_id
+  - name: losingTeam
+    using:
+      foreign_key_constraint_on: losing_team_id
+  - name: pool
+    using:
+      foreign_key_constraint_on: pool_id
+  - name: previousMatch1
+    using:
+      foreign_key_constraint_on: previous_match1_id
+  - name: previousMatch2
+    using:
+      foreign_key_constraint_on: previous_match2_id
+  - name: round
+    using:
+      foreign_key_constraint_on: round_id
+  - name: team1
+    using:
+      foreign_key_constraint_on: team1_id
+  - name: team2
+    using:
+      foreign_key_constraint_on: team2_id
+  - name: winningTeam
+    using:
+      foreign_key_constraint_on: winning_team_id
+array_relationships:
+  - name: games
+    using:
+      foreign_key_constraint_on:
+        column: match_id
+        table:
+          name: event_match_games
+          schema: public
+  - name: teams
+    using:
+      foreign_key_constraint_on:
+        column: match_id
+        table:
+          name: event_matches_teams
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - court_number
+        - created_at
+        - deleted_at
+        - event_court_id
+        - id
+        - is_bye
+        - losing_team_id
+        - match_order
+        - pool_id
+        - previous_match1_id
+        - previous_match2_id
+        - round_id
+        - selection_criteria_previous_match1
+        - selection_criteria_previous_match2
+        - team1_id
+        - team2_id
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - court_number
+        - created_at
+        - deleted_at
+        - event_court_id
+        - id
+        - is_bye
+        - losing_team_id
+        - match_order
+        - pool_id
+        - previous_match1_id
+        - previous_match2_id
+        - round_id
+        - selection_criteria_previous_match1
+        - selection_criteria_previous_match2
+        - team1_id
+        - team2_id
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - court_number
+        - event_court_id
+        - losing_team_id
+        - team1_id
+        - team2_id
+        - win_reason
+        - winning_team_id
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - round:
+              pool:
+                group:
+                  event:
+                    host_user_id:
+                      _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

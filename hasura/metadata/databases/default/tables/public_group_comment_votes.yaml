@@ -1,0 +1,74 @@
+table:
+  name: group_comment_votes
+  schema: public
+object_relationships:
+  - name: comment
+    using:
+      foreign_key_constraint_on: group_thread_comment_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - group_thread_comment_id
+        - user_id
+        - vote
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - group_thread_comment_id
+        - user_id
+        - vote
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 1
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - vote
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_thread_comment_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - vote
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+event_triggers:
+  - name: group_comment_vote_inserted
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/group-comment-vote-inserted'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET

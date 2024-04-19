@@ -1,0 +1,34 @@
+table:
+  name: venue_court_surfaces
+  schema: public
+object_relationships:
+  - name: venue
+    using:
+      foreign_key_constraint_on: venue_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - court_surface
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - venue_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 10
+  - role: user
+    permission:
+      columns:
+        - court_surface
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - venue_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 10

@@ -1,0 +1,3 @@
+table:
+  name: username_logs
+  schema: public

@@ -1,0 +1,39 @@
+table:
+  name: event_pools_teams
+  schema: public
+object_relationships:
+  - name: pool
+    using:
+      foreign_key_constraint_on: pool_id
+  - name: team
+    using:
+      foreign_key_constraint_on: team_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - pool_id
+        - team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - pool_id
+        - team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""

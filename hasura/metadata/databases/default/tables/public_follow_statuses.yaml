@@ -1,0 +1,4 @@
+table:
+  name: follow_statuses
+  schema: public
+is_enum: true

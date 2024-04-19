@@ -1,0 +1,1 @@
+INSERT INTO "public"."skill_levels"("id", "created_at", "updated_at", "deleted_at", "display_name", "rank", "is_displayed") VALUES (E'DO_NOT_PLAY', E'2023-01-19T17:04:30.65297+00:00', E'2023-01-19T17:04:30.65297+00:00', null, E'Don\'t Play', 0, false);

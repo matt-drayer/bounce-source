@@ -1,0 +1,36 @@
+table:
+  name: user_credit_cards
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - expire_month
+        - expire_year
+        - billing_city
+        - billing_country
+        - billing_email
+        - billing_line_1
+        - billing_line_2
+        - billing_name
+        - billing_phone
+        - billing_postal_code
+        - billing_state
+        - brand
+        - country
+        - fingerprint
+        - funding
+        - last4
+        - provider
+        - provider_card_id
+        - created_at
+        - updated_at
+        - id
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

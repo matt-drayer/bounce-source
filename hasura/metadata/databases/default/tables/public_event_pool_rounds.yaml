@@ -1,0 +1,46 @@
+table:
+  name: event_pool_rounds
+  schema: public
+object_relationships:
+  - name: pool
+    using:
+      foreign_key_constraint_on: pool_id
+array_relationships:
+  - name: matches
+    using:
+      foreign_key_constraint_on:
+        column: round_id
+        table:
+          name: event_matches
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - pool_id
+        - round_order
+        - title
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - pool_id
+        - round_order
+        - title
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200
+    comment: ""

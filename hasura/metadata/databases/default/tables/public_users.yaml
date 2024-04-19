@@ -1,0 +1,285 @@
+table:
+  name: users
+  schema: public
+object_relationships:
+  - name: activeCity
+    using:
+      foreign_key_constraint_on: active_city_id
+  - name: communicationPreferences
+    using:
+      manual_configuration:
+        column_mapping:
+          id: id
+        insertion_order: null
+        remote_table:
+          name: user_communication_preferences
+          schema: public
+  - name: country
+    using:
+      foreign_key_constraint_on: country_id
+  - name: countrySubdivision
+    using:
+      foreign_key_constraint_on: country_subdivision_id
+  - name: derfaultCreditCard
+    using:
+      foreign_key_constraint_on: default_credit_card_id
+  - name: normalizedTennisRatingScale
+    using:
+      foreign_key_constraint_on: normalized_tennis_rating_scale_id
+  - name: pickleballSkillLevel
+    using:
+      foreign_key_constraint_on: pickleball_skill_level_id
+  - name: profile
+    using:
+      manual_configuration:
+        column_mapping:
+          id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: registrationDetails
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_registration_details
+          schema: public
+  - name: tennisRatingScale
+    using:
+      foreign_key_constraint_on: tennis_rating_scale_id
+  - name: tennisSkillLevel
+    using:
+      foreign_key_constraint_on: tennis_skill_level_id
+array_relationships:
+  - name: authIdentities
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_auth_identities
+          schema: public
+  - name: coachLessons
+    using:
+      foreign_key_constraint_on:
+        column: owner_user_id
+        table:
+          name: lessons
+          schema: public
+  - name: coachQualifications
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: users_coach_qualifications
+          schema: public
+  - name: coachServices
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_coach_services
+          schema: public
+  - name: creditCards
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_credit_cards
+          schema: public
+  - name: customCourts
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_custom_courts
+          schema: public
+  - name: followers
+    using:
+      foreign_key_constraint_on:
+        column: followed_user_id
+        table:
+          name: user_follows
+          schema: public
+  - name: following
+    using:
+      foreign_key_constraint_on:
+        column: follower_user_id
+        table:
+          name: user_follows
+          schema: public
+  - name: groups
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: group_members
+          schema: public
+  - name: lessonTemplates
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: lesson_templates
+          schema: public
+  - name: notifications
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_notifications
+          schema: public
+  - name: participantLessons
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: lesson_participants
+          schema: public
+  - name: termsOfService
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_terms_of_service
+          schema: public
+  - name: usernameLogs
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: username_logs
+          schema: public
+  - name: usernamesClaimed
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: usernames_claimed
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - about_me
+        - about_me_video_url
+        - active_city_id
+        - birthday
+        - city_name
+        - coach_experience_set_at
+        - coach_experience_years
+        - coach_status
+        - coach_status_updated_at
+        - country_id
+        - country_subdivision_id
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - default_coach_payment_fulfillment_channel
+        - default_credit_card_id
+        - default_sport
+        - deleted_at
+        - dupr_id
+        - email
+        - event_organizer_account_type
+        - firebase_id
+        - full_name
+        - gender
+        - gender_preference
+        - geometry
+        - id
+        - is_marketing_registered
+        - is_onboard_complete
+        - latest_auth_provider
+        - latitude
+        - longitude
+        - normalized_tennis_rating
+        - normalized_tennis_rating_scale_id
+        - original_auth_provider
+        - phone_number
+        - pickleball_skill_level_id
+        - preferred_name
+        - profile_image_file_name
+        - profile_image_path
+        - profile_image_provider
+        - profile_image_provider_id
+        - profile_image_provider_url
+        - profile_image_url
+        - stripe_customer_id
+        - stripe_merchant_business_type
+        - stripe_merchant_charges_enabled
+        - stripe_merchant_country
+        - stripe_merchant_currency
+        - stripe_merchant_currently_due
+        - stripe_merchant_details_submitted
+        - stripe_merchant_eventually_due
+        - stripe_merchant_id
+        - stripe_merchant_past_due
+        - stripe_merchant_payouts_enabled
+        - tennis_rating
+        - tennis_rating_scale_id
+        - tennis_skill_level_id
+        - updated_at
+        - username
+      filter:
+        _and:
+          - id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - about_me
+        - about_me_video_url
+        - active_city_id
+        - birthday
+        - city_name
+        - coach_experience_set_at
+        - coach_experience_years
+        - coach_status
+        - coach_status_updated_at
+        - country_id
+        - country_subdivision_id
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - default_coach_payment_fulfillment_channel
+        - default_credit_card_id
+        - default_sport
+        - dupr_id
+        - event_organizer_account_type
+        - full_name
+        - gender
+        - gender_preference
+        - geometry
+        - is_marketing_registered
+        - is_onboard_complete
+        - latitude
+        - longitude
+        - normalized_tennis_rating
+        - normalized_tennis_rating_scale_id
+        - phone_number
+        - pickleball_skill_level_id
+        - preferred_name
+        - profile_image_file_name
+        - profile_image_path
+        - profile_image_provider
+        - profile_image_provider_id
+        - profile_image_provider_url
+        - profile_image_url
+        - tennis_rating
+        - tennis_rating_scale_id
+        - tennis_skill_level_id
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null

@@ -1,0 +1,3 @@
+import LessonJoinPaymentFulfillmentChannel from './LessonJoinPaymentFulfillmentChannel';
+
+export default LessonJoinPaymentFulfillmentChannel;

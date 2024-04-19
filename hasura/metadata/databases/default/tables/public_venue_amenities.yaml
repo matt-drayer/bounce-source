@@ -1,0 +1,34 @@
+table:
+  name: venue_amenities
+  schema: public
+object_relationships:
+  - name: venue
+    using:
+      foreign_key_constraint_on: venue_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - amenity
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - venue_id
+      filter:
+        updated_at:
+          _is_null: true
+      limit: 10
+  - role: user
+    permission:
+      columns:
+        - amenity
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - venue_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 20

@@ -1,0 +1,3 @@
+table:
+  name: welcome_email_configuration
+  schema: public

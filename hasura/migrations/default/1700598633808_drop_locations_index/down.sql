@@ -1,0 +1,6 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- DROP INDEX IF EXISTS countries_location_idx;
+-- DROP INDEX IF EXISTS country_subdivisions_location_idx;
+-- DROP INDEX IF EXISTS cities_location_idx;
+-- DROP INDEX IF EXISTS venues_location_idx;

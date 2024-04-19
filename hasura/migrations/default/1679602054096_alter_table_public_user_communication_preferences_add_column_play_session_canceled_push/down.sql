@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- alter table "public"."user_communication_preferences" add column "play_session_canceled_push" text
+--  null default 'ACTIVE';

@@ -1,0 +1,30 @@
+table:
+  name: pickleball_rating_scales
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - short_name
+        - name
+        - minimum
+        - maximum
+        - order
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - order
+        - maximum
+        - minimum
+        - name
+        - short_name
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+      filter: {}

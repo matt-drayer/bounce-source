@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "bounce-team-staging",
+    "staging": "bounce-team-staging",
+    "prod": "bounce-team"
+  }
+}

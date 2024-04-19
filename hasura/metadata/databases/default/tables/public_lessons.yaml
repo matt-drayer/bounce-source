@@ -1,0 +1,228 @@
+table:
+  name: lessons
+  schema: public
+object_relationships:
+  - name: owner
+    using:
+      foreign_key_constraint_on: owner_user_id
+  - name: ownerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          owner_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: usedTemplate
+    using:
+      foreign_key_constraint_on: used_template_id
+  - name: userCustomCourt
+    using:
+      foreign_key_constraint_on: user_custom_court_id
+array_relationships:
+  - name: equipment
+    using:
+      foreign_key_constraint_on:
+        column: lesson_id
+        table:
+          name: lesson_equipment
+          schema: public
+  - name: participants
+    using:
+      foreign_key_constraint_on:
+        column: lesson_id
+        table:
+          name: lesson_participants
+          schema: public
+  - name: times
+    using:
+      foreign_key_constraint_on:
+        column: lesson_id
+        table:
+          name: lesson_times
+          schema: public
+  - name: waitlist
+    using:
+      foreign_key_constraint_on:
+        column: lesson_id
+        table:
+          name: lesson_waitlists
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        owner_user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - cancel_reason
+        - canceled_at
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - currency
+        - description
+        - end_date_time
+        - locale
+        - owner_user_id
+        - participant_limit
+        - payment_fulfillment_channel
+        - price_unit_amount
+        - privacy
+        - published_at
+        - sport
+        - start_date_time
+        - status
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - type_custom
+        - used_template_id
+        - user_custom_court_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - end_date_time
+        - id
+        - locale
+        - owner_user_id
+        - participant_limit
+        - payment_fulfillment_channel
+        - price_unit_amount
+        - privacy
+        - published_at
+        - reminder_event_id
+        - sport
+        - start_date_time
+        - status
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - type_custom
+        - updated_at
+        - used_template_id
+        - user_custom_court_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - end_date_time
+        - id
+        - locale
+        - owner_user_id
+        - participant_limit
+        - payment_fulfillment_channel
+        - price_unit_amount
+        - privacy
+        - published_at
+        - reminder_event_id
+        - sport
+        - start_date_time
+        - status
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - type_custom
+        - updated_at
+        - used_template_id
+        - user_custom_court_id
+      filter:
+        deleted_at:
+          _is_null: true
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - currency
+        - description
+        - end_date_time
+        - locale
+        - participant_limit
+        - payment_fulfillment_channel
+        - price_unit_amount
+        - privacy
+        - published_at
+        - sport
+        - start_date_time
+        - status
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - type_custom
+        - used_template_id
+        - user_custom_court_id
+      filter:
+        _and:
+          - owner_user_id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true
+      check: null
+event_triggers:
+  - name: lesson_reminder_create
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - start_date_time
+          - status
+    retry_conf:
+      interval_sec: 30
+      num_retries: 2
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/lesson-reminder-create'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET

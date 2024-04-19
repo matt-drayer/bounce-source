@@ -1,0 +1,1 @@
+INSERT INTO "public"."skill_levels"("id", "created_at", "updated_at", "deleted_at", "display_name", "rank", "is_displayed") VALUES (E'BRAND_NEW', E'2023-01-19T17:05:06.585385+00:00', E'2023-01-19T17:05:06.585385+00:00', null, E'Brand new', 1, true);

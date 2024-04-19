@@ -1,0 +1,61 @@
+table:
+  name: cities
+  schema: public
+object_relationships:
+  - name: countrySubdivision
+    using:
+      foreign_key_constraint_on: country_subdivision_id
+array_relationships:
+  - name: groups
+    using:
+      foreign_key_constraint_on:
+        column: city_id
+        table:
+          name: groups
+          schema: public
+  - name: venues
+    using:
+      foreign_key_constraint_on:
+        column: city_id
+        table:
+          name: venues
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - city_slug
+        - country_subdivision_id
+        - created_at
+        - deleted_at
+        - geometry
+        - id
+        - is_active
+        - latitude
+        - longitude
+        - name
+        - slug
+        - timezone
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true
+  - role: user
+    permission:
+      columns:
+        - city_slug
+        - country_subdivision_id
+        - created_at
+        - deleted_at
+        - geometry
+        - id
+        - is_active
+        - latitude
+        - longitude
+        - name
+        - slug
+        - timezone
+        - updated_at
+      filter:
+        deleted_at:
+          _is_null: true

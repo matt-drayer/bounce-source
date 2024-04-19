@@ -1,0 +1,134 @@
+table:
+  name: group_thread_comments
+  schema: public
+object_relationships:
+  - name: parentComment
+    using:
+      foreign_key_constraint_on: group_comment_id
+  - name: rootComment
+    using:
+      foreign_key_constraint_on: group_root_comment_id
+  - name: thread
+    using:
+      foreign_key_constraint_on: group_thread_id
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: users
+          schema: public
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: allChildComments
+    using:
+      foreign_key_constraint_on:
+        column: group_root_comment_id
+        table:
+          name: group_thread_comments
+          schema: public
+  - name: files
+    using:
+      foreign_key_constraint_on:
+        column: group_thread_comment_id
+        table:
+          name: group_thread_comment_files
+          schema: public
+  - name: replies
+    using:
+      foreign_key_constraint_on:
+        column: group_comment_id
+        table:
+          name: group_thread_comments
+          schema: public
+  - name: votes
+    using:
+      foreign_key_constraint_on:
+        column: group_thread_comment_id
+        table:
+          name: group_comment_votes
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - content
+        - group_comment_id
+        - group_root_comment_id
+        - group_thread_id
+        - is_original_thread_comment
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - group_thread_id
+        - content
+        - group_comment_id
+        - group_root_comment_id
+        - is_original_thread_comment
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - is_original_thread_comment
+        - content
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_comment_id
+        - group_root_comment_id
+        - group_thread_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+event_triggers:
+  - name: group_comment_inserted
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/group-comment-inserted'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET

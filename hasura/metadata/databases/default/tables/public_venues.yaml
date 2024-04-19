@@ -1,0 +1,118 @@
+table:
+  name: venues
+  schema: public
+object_relationships:
+  - name: city
+    using:
+      foreign_key_constraint_on: city_id
+array_relationships:
+  - name: amenities
+    using:
+      foreign_key_constraint_on:
+        column: venue_id
+        table:
+          name: venue_amenities
+          schema: public
+  - name: courtSurfaces
+    using:
+      foreign_key_constraint_on:
+        column: venue_id
+        table:
+          name: venue_court_surfaces
+          schema: public
+  - name: groups
+    using:
+      foreign_key_constraint_on:
+        column: venue_id
+        table:
+          name: group_venues
+          schema: public
+  - name: images
+    using:
+      foreign_key_constraint_on:
+        column: venue_id
+        table:
+          name: venue_images
+          schema: public
+  - name: playSessions
+    using:
+      foreign_key_constraint_on:
+        column: venue_id
+        table:
+          name: play_sessions
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - access_details
+        - access_type
+        - address_string
+        - city_id
+        - coordinates_wkb
+        - created_at
+        - deleted_at
+        - description
+        - facility_type
+        - featured_priority
+        - geometry
+        - has_pickleball
+        - has_reservations
+        - id
+        - indoor_court_count
+        - is_active
+        - latitude
+        - longitude
+        - outdoor_court_count
+        - pickleball_lines
+        - pickleball_nets
+        - schedule_details
+        - should_hide_default_description
+        - slug
+        - timezone
+        - title
+        - total_court_count
+        - updated_at
+        - venue_slug
+        - website_url
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+  - role: user
+    permission:
+      columns:
+        - access_details
+        - access_type
+        - address_string
+        - city_id
+        - coordinates_wkb
+        - created_at
+        - deleted_at
+        - description
+        - facility_type
+        - featured_priority
+        - geometry
+        - has_pickleball
+        - has_reservations
+        - id
+        - indoor_court_count
+        - is_active
+        - latitude
+        - longitude
+        - outdoor_court_count
+        - pickleball_lines
+        - pickleball_nets
+        - schedule_details
+        - should_hide_default_description
+        - slug
+        - timezone
+        - title
+        - total_court_count
+        - updated_at
+        - venue_slug
+        - website_url
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500

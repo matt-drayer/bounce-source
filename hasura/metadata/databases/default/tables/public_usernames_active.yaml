@@ -1,0 +1,16 @@
+table:
+  name: usernames_active
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - username
+      filter: {}
+      limit: 1
+  - role: user
+    permission:
+      columns:
+        - username
+      filter: {}
+      limit: 1

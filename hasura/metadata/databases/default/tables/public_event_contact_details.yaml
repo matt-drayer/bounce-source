@@ -1,0 +1,44 @@
+table:
+  name: event_contact_details
+  schema: public
+object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - contact_url
+        - email
+        - phone_number
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_id
+        - id
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - event:
+              host_user_id:
+                _eq: X-Hasura-User-Id
+      limit: 1
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - contact_url
+        - email
+        - phone_number
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - event:
+              host_user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

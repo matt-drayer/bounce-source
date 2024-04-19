@@ -1,0 +1,114 @@
+table:
+  name: event_match_games
+  schema: public
+object_relationships:
+  - name: losingTeam
+    using:
+      foreign_key_constraint_on: losing_team_id
+  - name: match
+    using:
+      foreign_key_constraint_on: match_id
+  - name: team1
+    using:
+      foreign_key_constraint_on: team1_id
+  - name: team2
+    using:
+      foreign_key_constraint_on: team2_id
+  - name: winningTeam
+    using:
+      foreign_key_constraint_on: winning_team_id
+array_relationships:
+  - name: scores
+    using:
+      foreign_key_constraint_on:
+        column: game_id
+        table:
+          name: event_game_scores
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - match:
+              round:
+                pool:
+                  group:
+                    event:
+                      host_user_id:
+                        _eq: X-Hasura-User-Id
+      columns:
+        - losing_team_id
+        - match_id
+        - team1_id
+        - team1_score
+        - team2_id
+        - team2_score
+        - win_reason
+        - winning_team_id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - losing_team_id
+        - match_id
+        - team1_id
+        - team1_score
+        - team2_id
+        - team2_score
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 20
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - losing_team_id
+        - match_id
+        - team1_id
+        - team1_score
+        - team2_id
+        - team2_score
+        - updated_at
+        - win_reason
+        - winning_team_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 20
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - losing_team_id
+        - team1_score
+        - team2_score
+        - win_reason
+        - winning_team_id
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - match:
+              round:
+                pool:
+                  group:
+                    event:
+                      host_user_id:
+                        _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

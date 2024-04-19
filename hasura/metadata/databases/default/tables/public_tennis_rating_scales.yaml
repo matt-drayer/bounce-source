@@ -1,0 +1,30 @@
+table:
+  name: tennis_rating_scales
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - maximum
+        - minimum
+        - name
+        - order
+        - short_name
+        - updated_at
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - id
+        - maximum
+        - minimum
+        - name
+        - order
+        - short_name
+        - updated_at
+      filter: {}

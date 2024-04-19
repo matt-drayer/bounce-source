@@ -1,0 +1,67 @@
+table:
+  name: lesson_participants
+  schema: public
+object_relationships:
+  - name: lesson
+    using:
+      foreign_key_constraint_on: lesson_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: orderItems
+    using:
+      foreign_key_constraint_on:
+        column: lesson_participant_id
+        table:
+          name: lesson_order_items
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - added_at
+        - created_at
+        - deleted_at
+        - id
+        - lesson_id
+        - paid_at
+        - payment_fulfillment_channel
+        - refunded_at
+        - removed_at
+        - status
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - added_at
+        - created_at
+        - deleted_at
+        - id
+        - lesson_id
+        - paid_at
+        - payment_fulfillment_channel
+        - refunded_at
+        - removed_at
+        - status
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      allow_aggregations: true

@@ -1,0 +1,102 @@
+table:
+  name: user_coach_services
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - currency
+        - description
+        - price_unit_amount
+        - title
+        - type
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - id
+        - price_unit_amount
+        - title
+        - type
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 25
+  - role: user
+    permission:
+      columns:
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - id
+        - price_unit_amount
+        - title
+        - type
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_id
+        - cover_image_provider_url
+        - cover_image_url
+        - currency
+        - deleted_at
+        - description
+        - price_unit_amount
+        - title
+        - type
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

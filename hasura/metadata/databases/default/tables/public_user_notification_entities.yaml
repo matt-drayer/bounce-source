@@ -1,0 +1,64 @@
+table:
+  name: user_notification_entities
+  schema: public
+object_relationships:
+  - name: actingUser
+    using:
+      foreign_key_constraint_on: acting_user_id
+  - name: actingUserProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          acting_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: groupThread
+    using:
+      foreign_key_constraint_on: group_thread_id
+  - name: groupThreadComment
+    using:
+      foreign_key_constraint_on: group_thread_comment_id
+  - name: lesson
+    using:
+      foreign_key_constraint_on: lesson_id
+  - name: notificationDetails
+    using:
+      foreign_key_constraint_on:
+        column: user_notification_entity_id
+        table:
+          name: user_notification_details
+          schema: public
+  - name: playSession
+    using:
+      foreign_key_constraint_on: play_session_id
+  - name: playSessionComment
+    using:
+      foreign_key_constraint_on: play_session_comment_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - acting_user_id
+        - created_at
+        - deleted_at
+        - group_id
+        - group_thread_comment_id
+        - group_thread_id
+        - id
+        - lesson_id
+        - play_session_comment_id
+        - play_session_id
+        - updated_at
+      filter:
+        _and:
+          - notificationDetails:
+              userNotifications:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true

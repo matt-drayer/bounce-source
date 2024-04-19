@@ -1,0 +1,109 @@
+query getUserChampaionByEmail($email: String!) {
+  users(where: { email: { _eq: $email } }) {
+    id
+    email
+  }
+}
+{
+  "email": "team+wolverines@bounce.game"
+}
+
+query getCitiesInState($stateName: String!) {
+  cities(where: { countrySubdivision: { name: { _eq: $stateName } } }) {
+    id
+    name
+    sourceCitySlug
+    citySlug
+  }
+}
+# {
+#   "stateName": "Michigan"
+# }
+
+mutation insertGroup(
+  $accessCode: String!
+  $cityId: uuid!
+  $contactEmail: String!
+  $headline: String = ""
+  $description: String = ""
+  $ownerUserId: uuid = ""
+  $slug: String = ""
+  $title: String = ""
+) {
+  insertGroupsOne(
+    object: {
+      allowMemberInvites: true
+      accessCode: $accessCode
+      allowMemberSessionInvites: true
+      cityId: $cityId
+      contactEmail: $contactEmail
+      description: $description
+      headline: $headline
+      isPrivate: false
+      ownerUserId: $ownerUserId
+      primarySport: PICKLEBALL
+      title: $title
+      slug: $slug
+    }
+  ) {
+    id
+  }
+}
+# {
+#   "accessCode": "GOBLUE",
+#   "cityId": "cda2896e-8e99-4d26-bde1-4f7cd8b10e11",
+#   "contactEmail": "team+wolverines@bounce.game",
+#   "ownerUserId": "55cb33df-6428-482c-8799-d5282f8f979a",
+#   "title": "Michigan Pickleball Club",
+#   "slug": "michigan-pickleball-club"
+# }
+
+mutation addUserToGroup($userId: uuid!, $groupId: uuid!) {
+  insertGroupMembersOne(object: {userId: $userId, groupId: $groupId, isActive: true}, onConflict: {constraint: group_members_group_id_user_id_key, updateColumns: updatedAt}) {
+    id
+  }
+}
+# {
+#   "userId": "55cb33df-6428-482c-8799-d5282f8f979a",
+#   "groupId": "d1472ec4-a38d-4ca6-b7de-b8841f80cd46"
+# }
+
+query getVenuesByCity($stateName: String!) {
+  cities(where: { countrySubdivision: { name: { _eq: $stateName } } }) {
+    id
+    name
+    venues {
+      id
+      title
+      addressString
+    }
+  }
+}
+# {
+#   "stateName": "Michigan"
+# }
+
+query getGroups {
+  groups {
+    id
+    title
+    city {
+      name
+      countrySubdivision {
+        name
+      }
+    }
+  }
+}
+
+mutation uploadVenuesForGroup($objects: [GroupVenuesInsertInput!] = {}) {
+  insertGroupVenues(
+    objects: $objects
+    onConflict: { constraint: group_venues_group_id_venue_id_key, updateColumns: updatedAt }
+  ) {
+    affectedRows
+  }
+}
+# {
+#   "objects": [{"venueId": "id", "groupId": "id"}, ...]
+# }

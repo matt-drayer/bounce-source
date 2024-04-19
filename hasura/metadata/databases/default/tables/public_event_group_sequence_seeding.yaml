@@ -1,0 +1,41 @@
+table:
+  name: event_group_sequence_seeding
+  schema: public
+object_relationships:
+  - name: sequence
+    using:
+      foreign_key_constraint_on: event_group_sequence_id
+  - name: team
+    using:
+      foreign_key_constraint_on: event_team_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - seed
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_group_sequence_id
+        - event_team_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 250
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - seed
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_group_sequence_id
+        - event_team_id
+        - id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 250
+    comment: ""

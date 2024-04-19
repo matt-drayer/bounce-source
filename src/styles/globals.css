@@ -1,0 +1,584 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --fill-height: env(-webkit-fill-available);
+}
+
+@layer utilities {
+  .safearea-pad-y {
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .safearea-pad-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  .safearea-pad-bot {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .safearea-spacer-top {
+    height: env(safe-area-inset-top, 0);
+  }
+  .safearea-spacer-bot {
+    height: env(safe-area-inset-bottom, 0);
+  }
+
+  .toast-force-safe-area-top {
+    top: max(env(safe-area-inset-top, 0), 16px) !important;
+  }
+
+  .h-safe-screen-desktop {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+
+  /* For content that you want as the exact height of the screen
+  Typically for child content that scrolls */
+  .h-safe-screen {
+    height: stretch;
+    height: fill-available;
+    height: -moz-available;
+    height: -webkit-fill-available;
+
+    min-height: fill-available;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+
+    max-height: 100vh;
+
+    @apply sm:h-safe-screen-desktop;
+  }
+
+  .tournament-register-form {
+    @apply max-h-[calc(100vh-theme(height.topnav))] md:max-h-[calc(100vh-theme(height.topnav)-2.5rem)];
+  }
+
+  .focus-on-tab {
+    @apply outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-color-text-lightmode-primary focus-visible:ring-offset-2 focus-visible:ring-offset-color-bg-lightmode-primary dark:focus-visible:ring-color-text-darkmode-primary dark:focus-visible:ring-offset-color-bg-darkmode-primary;
+  }
+
+  .body-lock {
+    overflow: hidden;
+    inset: 0px;
+    margin: 0px;
+    inset-inline-end: 0px;
+    position: fixed;
+    --scrollbar-gutter: 0px;
+  }
+
+  .body-lock-mobile {
+    @media screen and (max-width: 639px) {
+      @apply body-lock;
+    }
+  }
+}
+
+/* -------------------------- DESIGN SYSTEM START -------------------------- */
+/* -------------------------- DESIGN SYSTEM START -------------------------- */
+/* -------------------------- DESIGN SYSTEM START -------------------------- */
+/* -------------------------- DESIGN SYSTEM START -------------------------- */
+/* -------------------------- DESIGN SYSTEM START -------------------------- */
+
+/* Product Typography */
+@layer components {
+  /* Prod/Display */
+  .typography-product-display {
+    @apply text-size-product-display font-bold italic;
+  }
+
+  /* Prod/Heading D */
+  .typography-product-heading-desktop {
+    @apply text-size-product-heading-desktop font-bold;
+  }
+
+  /* Prod/Heading M */
+  .typography-product-heading-mobile {
+    @apply text-size-product-heading-mobile font-bold;
+  }
+
+  /* Combined responsive Prod/Heading D and M */
+  .typography-product-heading {
+    @apply typography-product-heading-mobile lg:typography-product-heading-desktop;
+  }
+
+  /* Prod/Heading D compact */
+  .typography-product-heading-compact-desktop {
+    @apply text-size-product-heading-compact-desktop font-bold;
+  }
+
+  /* Combined responsive Prod/Heading D and M (M not built yet) */
+  .typography-product-heading-compact {
+    @apply typography-product-heading-compact-desktop;
+  }
+
+  /* Prod/Subheading */
+  .typography-product-subheading {
+    @apply text-size-product-subheading font-bold;
+  }
+
+  /* Prod/Body highlight */
+  .typography-product-body-highlight {
+    @apply text-size-product-body-highlight font-medium;
+  }
+
+  /* Prod/Button label L M */
+  .typography-product-button-label-large {
+    @apply text-size-product-button-label-large font-medium;
+  }
+
+  /* Prod/Button label L M */
+  .typography-product-button-label-medium {
+    @apply text-size-product-button-label-medium font-medium;
+  }
+
+  /* Prod/Body */
+  .typography-product-body {
+    @apply text-size-product-body;
+  }
+
+  /* Prod/Button label S */
+  .typography-product-button-label-small {
+    @apply text-size-product-button-label-small font-medium;
+  }
+
+  /* Prod/Link */
+  .typography-product-link {
+    @apply text-size-product-link font-medium;
+  }
+
+  /* Prod/Element label */
+  .typography-product-element-label {
+    @apply text-size-product-element-label font-medium;
+  }
+
+  /* Prod/Caption */
+  .typography-product-caption {
+    @apply text-size-product-caption;
+  }
+
+  /* Prod/Button label XS */
+  .typography-product-button-label-xs {
+    @apply text-size-product-button-label-xs font-medium;
+  }
+
+  /* Prod/Chips, Filters */
+  .typography-product-chips-filters {
+    @apply text-size-product-chips-filters font-medium;
+  }
+
+  /* Prod/Text in cards */
+  .typography-product-text-card {
+    @apply text-size-product-text-card;
+  }
+
+  /* Prod/Tabbar Mobile */
+  .typography-product-tabbar-mobile {
+    @apply text-size-product-tabbar-mobile;
+  }
+}
+
+/* Informative Typography */
+@layer components {
+  /* Inf/Display Mega primary Desktop */
+  .typography-informative-display-mega-primary-desktop {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-mega-primary-desktop font-extrabold italic;
+  }
+
+  /* Inf/Display Mega primary Mobile */
+  .typography-informative-display-mega-primary-mobile {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-mega-primary-mobile font-extrabold italic;
+  }
+
+  /* Combined responsive Inf/Display Mega primary Desktop and Mobile */
+  .typography-informative-display-mega-primary {
+    @apply typography-informative-display-mega-primary-mobile lg:typography-informative-display-mega-primary-desktop;
+  }
+
+  /* Inf/Display Mega secondary Desktop */
+  .typography-informative-display-mega-secondary-desktop {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-mega-secondary-desktop font-medium;
+  }
+
+  /* Inf/Display Mega secondary Mobile */
+  .typography-informative-display-mega-secondary-mobile {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-mega-secondary-mobile font-medium;
+  }
+
+  /* Combined responsive Inf/Display Mega secondary Desktop and Mobile */
+  .typography-informative-display-mega-secondary {
+    @apply typography-informative-display-mega-secondary-mobile lg:typography-informative-display-mega-secondary-desktop;
+  }
+
+  /* Inf/Display primary Desktop */
+  .typography-informative-display-primary-desktop {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-primary-desktop font-extrabold italic;
+  }
+
+  /* Inf/Display primary Mobile */
+  .typography-informative-display-primary-mobile {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-primary-mobile font-extrabold italic;
+  }
+
+  /* Combined responsive Inf/Display primary Desktop and Mobile */
+  .typography-informative-display-primary {
+    @apply typography-informative-display-primary-mobile lg:typography-informative-display-primary-desktop;
+  }
+
+  /* Inf/Display secondary Desktop */
+  .typography-informative-display-secondary-desktop {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-secondary-desktop font-medium;
+  }
+
+  /* Inf/Display secondary Mobile */
+  .typography-informative-display-secondary-mobile {
+    @apply font-family-poppins;
+    @apply text-size-informative-display-secondary-mobile font-medium;
+  }
+
+  /* Combined responsive Inf/Display secondary Desktop and Mobile */
+  .typography-informative-display-secondary {
+    @apply typography-informative-display-secondary-mobile lg:typography-informative-display-secondary-desktop;
+  }
+
+  /* Inf/Heading D */
+  .typography-informative-heading-desktop {
+    @apply text-size-informative-heading-desktop font-bold;
+  }
+
+  /* Inf/Heading M */
+  .typography-informative-heading-mobile {
+    @apply text-size-informative-heading-mobile font-bold;
+  }
+
+  /* Combined responsive Inf/Heading D and Inf/Heading M */
+  .typography-informative-heading {
+    @apply typography-informative-heading-mobile lg:typography-informative-heading-desktop;
+  }
+
+  /* Inf/Heading D compact */
+  .typography-informative-heading-compact-desktop {
+    @apply text-size-informative-heading-compact-desktop font-bold;
+  }
+
+  /* Inf/Subheading */
+  .typography-informative-subheading {
+    @apply text-size-informative-subheading;
+  }
+
+  /* Inf/Quote */
+  .typography-informative-quote {
+    @apply text-size-informative-quote font-medium italic;
+  }
+
+  /* Inf/Subheading compact */
+  .typography-informative-subheading-compact {
+    @apply text-size-informative-subheading-compact;
+  }
+
+  /* Inf/Body highlight */
+  .typography-informative-body-highlight {
+    @apply text-size-informative-body-highlight font-medium;
+  }
+
+  /* Inf/Button label */
+  .typography-informative-button-label {
+    @apply text-size-informative-button-label font-medium italic;
+  }
+
+  /* Inf/Body */
+  .typography-informative-body {
+    @apply text-size-informative-body;
+  }
+
+  /* Inf/Caption highlight */
+  .typography-informative-caption-highlight {
+    @apply text-size-informative-caption-highlight font-medium;
+  }
+
+  /* Inf/Caption */
+  .typography-informative-caption {
+    @apply text-size-informative-caption;
+  }
+}
+
+/* UI Components */
+@layer components {
+  a,
+  button,
+  input,
+  input[type='text'],
+  input[type='number'],
+  input[type='email'],
+  textarea,
+  select {
+    @apply focus-on-tab rounded-md;
+  }
+
+  .no-outline {
+    @apply border-none shadow-none outline-none outline-transparent ring-0 ring-transparent ring-offset-0 focus:outline-none !important;
+  }
+
+  .label-base {
+    @apply block leading-6 text-color-text-lightmode-secondary dark:text-color-text-darkmode-secondary;
+  }
+  .label-form {
+    @apply label-base mb-2;
+  }
+
+  .checkbox-base {
+    @apply h-6 w-6 rounded text-color-checkbox-active focus:ring-color-text-lightmode-primary disabled:opacity-50 dark:focus:ring-color-text-darkmode-primary;
+  }
+  .checkbox-form {
+    @apply checkbox-base border-color-border-input-lightmode dark:border-color-border-input-darkmode;
+  }
+
+  .input-unstyled {
+    @apply border-none shadow-none outline-none outline-transparent ring-0 ring-transparent ring-offset-0 focus:outline-none !important;
+  }
+
+  .input-base {
+    @apply block w-full rounded-md border-0 border-none py-2 outline-none focus:outline-none focus:ring-2 focus:ring-color-text-lightmode-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-color-text-darkmode-primary;
+    /* @todo figure out invalid -> invalid:text-color-text-lightmode-error invalid:placeholder-color-text-lightmode-error invalid:bg-color-bg-lightmode-error dark:invalid:text-color-text-darkmode-error dark:invalid:placeholder-color-text-darkmode-error dark:invalid:bg-color-bg-darkmode-error invalid:focus:ring-color-text-lightmode-error dark:invalid:focus:ring-color-text-darkmode-error */
+  }
+  .input-lightmode {
+    @apply bg-color-bg-input-lightmode-primary text-color-text-lightmode-primary placeholder-color-text-lightmode-placeholder;
+  }
+  .input-darkmode {
+    @apply dark:bg-color-bg-input-darkmode-primary dark:text-color-text-darkmode-primary dark:placeholder-color-text-darkmode-placeholder;
+  }
+  .input-base-form {
+    @apply input-base input-lightmode input-darkmode;
+  }
+  .input-form {
+    @apply input-base-form px-3.5;
+  }
+  .input-inverted {
+    @apply block w-full rounded-md border-0 border-none bg-color-bg-lightmode-primary px-3.5 py-2 placeholder-color-text-darkmode-placeholder focus:outline-none focus:ring-2 focus:ring-color-text-lightmode-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-color-bg-darkmode-primary dark:focus:ring-color-text-darkmode-primary;
+  }
+
+  /* Button base styles */
+  .button-focused {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-color-text-lightmode-primary focus-visible:ring-offset-2 dark:focus-visible:ring-color-text-darkmode-primary;
+  }
+  .button-disabled {
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .button-base {
+    @apply button-focused button-disabled;
+  }
+  .button-rounded-base {
+    @apply button-base block rounded-full text-center;
+  }
+  .button-rounded-full {
+    @apply button-rounded-base w-full py-4 font-medium md:py-3;
+  }
+  .button-rounded-inline {
+    @apply button-rounded-base py-2;
+  }
+
+  /* Button colors */
+  .button-background-primary {
+    @apply border border-color-button-lightmode bg-color-button-lightmode text-color-text-darkmode-primary dark:border-color-button-darkmode dark:bg-color-button-darkmode dark:text-color-text-lightmode-primary;
+  }
+  .button-background-primary-inverted {
+    @apply border border-color-button-lightmode bg-color-bg-lightmode-primary text-color-button-lightmode dark:border-color-button-darkmode dark:bg-color-bg-darkmode-primary dark:text-color-text-darkmode-primary;
+  }
+  .button-background-brand {
+    @apply border border-color-brand-highlight bg-color-brand-highlight text-color-text-darkmode-primary;
+  }
+  .button-background-brand-inverted {
+    @apply border border-color-brand-highlight bg-color-bg-lightmode-primary text-color-brand-highlight;
+  }
+  .button-background-darkmode-only {
+    /* For buttons that have a darkmode background even in lightmode */
+    @apply border border-color-button-darkmode bg-color-button-darkmode text-color-text-lightmode-primary dark:bg-color-button-darkmode dark:text-color-text-lightmode-primary;
+  }
+  .button-background-bold {
+    @apply border border-color-button-fire bg-color-button-fire text-color-text-darkmode-primary;
+  }
+
+  /* Styled buttons */
+  /* Full */
+  .button-rounded-full-primary {
+    @apply button-rounded-full button-background-primary;
+  }
+  .button-rounded-full-primary-inverted {
+    @apply button-rounded-full button-background-primary-inverted;
+  }
+  .button-rounded-full-brand {
+    @apply button-rounded-full button-background-brand;
+  }
+  .button-rounded-full-brand-inverted {
+    @apply button-rounded-full button-background-brand-inverted;
+  }
+  .button-rounded-full-darkmode-only {
+    @apply button-rounded-full button-background-darkmode-only;
+  }
+  .button-rounded-full-background-bold {
+    @apply button-rounded-full button-background-bold;
+  }
+  /* Inline */
+  .button-rounded-inline-primary {
+    @apply button-rounded-inline button-background-primary;
+  }
+  .button-rounded-inline-primary-inverted {
+    @apply button-rounded-inline button-background-primary-inverted;
+  }
+  .button-rounded-inline-brand {
+    @apply button-rounded-inline button-background-brand;
+  }
+  .button-rounded-inline-brand-inverted {
+    @apply button-rounded-inline button-background-brand-inverted;
+  }
+  .button-rounded-inline-darkmode-only {
+    @apply button-rounded-inline button-background-darkmode-only;
+  }
+  .button-rounded-inline-background-bold {
+    @apply button-rounded-inline button-background-bold;
+  }
+
+  /* FAB */
+  .floating-action-button {
+    @apply inline-flex items-center justify-center rounded-full p-3 shadow-fab;
+  }
+  .floating-action-button-primary {
+    @apply floating-action-button bg-color-button-lightmode;
+  }
+}
+
+/* -------------------------- DESIGN SYSTEM END -------------------------- */
+/* -------------------------- DESIGN SYSTEM END -------------------------- */
+/* -------------------------- DESIGN SYSTEM END -------------------------- */
+/* -------------------------- DESIGN SYSTEM END -------------------------- */
+/* -------------------------- DESIGN SYSTEM END -------------------------- */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /**
+  * @todo: DECIDE IF THIS IS WORKING AND NOT HORIZONTAL SCROLLING WITH THIS HIDDEN
+  */
+  /* overflow-x: hidden; */
+  font-family: 'Inter', apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  @apply text-color-text-lightmode-primary dark:text-color-text-darkmode-primary;
+  @apply bg-color-bg-lightmode-primary dark:bg-color-bg-darkmode-primary;
+
+  /* Make it full height */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 100vh;
+
+  /* NOTE: This is to remove the transparent blue box on tap to feel more native mobile */
+  /* This is most needed in a capacitor application */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html.dark,
+body.dark {
+  @apply bg-color-bg-darkmode-primary;
+}
+
+::selection {
+  background-color: #ff502d;
+  color: white;
+}
+
+@media only screen and (max-width: 639px) {
+  html,
+  body {
+    /* mobile viewport bug fix for Safari */
+    min-height: -webkit-fill-available;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#__next {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+div[data-rsbs-backdrop],
+div[data-rsbs-overlay] {
+  z-index: 80;
+}
+
+div[data-rsbs-header] {
+  box-shadow: none;
+}
+
+.follow-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  max-height: 90%;
+  @apply pr-2;
+}
+
+.follow-scrollbar::-webkit-scrollbar-track {
+  width: 8px;
+  border-radius: 100px;
+  @apply bg-color-bg-lightmode-primary;
+}
+
+.follow-scrollbar::-webkit-scrollbar-thumb {
+  width: 8px;
+  border-radius: 100px;
+  @apply bg-brand-gray-300;
+}
+
+.follow-scrollbar::-webkit-scrollbar-thumb:hover {
+}
+
+.follow-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  @apply rounded-full border-[1.5px] border-solid border-color-bg-lightmode-invert bg-color-bg-lightmode-primary shadow-md dark:border-color-bg-darkmode-invert dark:bg-color-bg-darkmode-primary;
+}
+
+input[type='range']::-moz-range-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  @apply rounded-full border-[1.5px] border-solid border-color-bg-lightmode-invert bg-color-bg-lightmode-primary shadow-md dark:border-color-bg-darkmode-invert dark:bg-color-bg-darkmode-primary;
+}
+
+/* Add this to your project's CSS file */
+
+.hide-number-stepper::-webkit-inner-spin-button,
+.hide-number-stepper::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hide-number-stepper {
+  -moz-appearance: textfield; /* For Firefox */
+}
+
+/* For Internet Explorer 11, you might need additional rules if supporting it */
+.hide-number-stepper::-ms-clear,
+.hide-number-stepper::-ms-reveal {
+  display: none;
+}

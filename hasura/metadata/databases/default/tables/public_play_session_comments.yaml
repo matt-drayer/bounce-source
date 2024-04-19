@@ -1,0 +1,104 @@
+table:
+  name: play_session_comments
+  schema: public
+object_relationships:
+  - name: playSession
+    using:
+      foreign_key_constraint_on: play_session_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: allChildComments
+    using:
+      foreign_key_constraint_on:
+        column: play_session_root_comment_id
+        table:
+          name: play_session_comments
+          schema: public
+  - name: replies
+    using:
+      foreign_key_constraint_on:
+        column: play_session_comment_id
+        table:
+          name: play_session_comments
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - content
+        - play_session_comment_id
+        - play_session_id
+        - play_session_root_comment_id
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - content
+        - created_at
+        - deleted_at
+        - updated_at
+        - id
+        - play_session_comment_id
+        - play_session_id
+        - play_session_root_comment_id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - deleted_at
+        - id
+        - play_session_comment_id
+        - play_session_id
+        - play_session_root_comment_id
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 250
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+event_triggers:
+  - name: play_session_comment_inserted
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/play-session-comment-inserted'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET

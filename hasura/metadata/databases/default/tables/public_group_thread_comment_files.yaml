@@ -1,0 +1,90 @@
+table:
+  name: group_thread_comment_files
+  schema: public
+object_relationships:
+  - name: comment
+    using:
+      foreign_key_constraint_on: group_thread_comment_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - comment:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - file_name
+        - file_type
+        - group_thread_comment_id
+        - host
+        - original_file_name
+        - path
+        - provider
+        - provider_url
+        - url
+        - user_id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - is_visible
+        - file_name
+        - file_type
+        - host
+        - original_file_name
+        - path
+        - provider
+        - provider_url
+        - url
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_thread_comment_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 10
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - is_visible
+        - file_name
+        - file_type
+        - host
+        - original_file_name
+        - path
+        - provider
+        - provider_url
+        - url
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_thread_comment_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - comment:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

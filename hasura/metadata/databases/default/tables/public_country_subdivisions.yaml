@@ -1,0 +1,50 @@
+table:
+  name: country_subdivisions
+  schema: public
+object_relationships:
+  - name: country
+    using:
+      foreign_key_constraint_on: country_id
+array_relationships:
+  - name: cities
+    using:
+      foreign_key_constraint_on:
+        column: country_subdivision_id
+        table:
+          name: cities
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - code
+        - country_id
+        - created_at
+        - deleted_at
+        - geometry
+        - id
+        - latitude
+        - longitude
+        - name
+        - slug
+        - type
+        - updated_at
+      filter: {}
+      limit: 100
+  - role: user
+    permission:
+      columns:
+        - code
+        - country_id
+        - created_at
+        - deleted_at
+        - geometry
+        - id
+        - latitude
+        - longitude
+        - name
+        - slug
+        - type
+        - updated_at
+      filter: {}
+      limit: 100

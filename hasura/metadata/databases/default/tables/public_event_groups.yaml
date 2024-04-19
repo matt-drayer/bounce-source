@@ -1,0 +1,144 @@
+table:
+  name: event_groups
+  schema: public
+object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+array_relationships:
+  - name: courts
+    using:
+      foreign_key_constraint_on:
+        column: active_event_group_id
+        table:
+          name: event_courts
+          schema: public
+  - name: pools
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: event_group_pools
+          schema: public
+  - name: registrations
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: event_group_registrations
+          schema: public
+  - name: sequences
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: event_group_sequences
+          schema: public
+  - name: teams
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: event_teams
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - ends_at
+        - event_id
+        - format
+        - format_custom_name
+        - games_per_match
+        - gender
+        - id
+        - maximum_age
+        - maximum_rating
+        - minimum_age
+        - minimum_number_of_games
+        - minimum_rating
+        - number_of_elimination_teams
+        - number_of_estimated_courts
+        - price_unit_amount
+        - scoring_format
+        - starts_at
+        - team_limit
+        - team_type
+        - title
+        - total_points
+        - updated_at
+        - win_by
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - ends_at
+        - event_id
+        - format
+        - format_custom_name
+        - games_per_match
+        - gender
+        - id
+        - maximum_age
+        - maximum_rating
+        - minimum_age
+        - minimum_number_of_games
+        - minimum_rating
+        - number_of_elimination_teams
+        - number_of_estimated_courts
+        - price_unit_amount
+        - scoring_format
+        - starts_at
+        - team_limit
+        - team_type
+        - title
+        - total_points
+        - updated_at
+        - win_by
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - deleted_at
+        - ends_at
+        - format
+        - format_custom_name
+        - games_per_match
+        - gender
+        - maximum_age
+        - maximum_rating
+        - minimum_age
+        - minimum_number_of_games
+        - minimum_rating
+        - number_of_elimination_teams
+        - number_of_estimated_courts
+        - price_unit_amount
+        - scoring_format
+        - starts_at
+        - team_limit
+        - team_type
+        - title
+        - total_points
+        - win_by
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - event:
+              host_user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

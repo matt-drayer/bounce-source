@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Bounce",
+  "short_name": "Bounce",
+  "version": "0.0.1",
+  "default_locale": "en",
+  "description": "Hit different.",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "start_url": "https://www.bounce.game",
+  "icons": [
+    {
+      "src": "https://www.bounce.game/icons/apple-icon.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "density": "4.0"
+    }
+  ]
+}

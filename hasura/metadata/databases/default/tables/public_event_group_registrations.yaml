@@ -1,0 +1,84 @@
+table:
+  name: event_group_registrations
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: team
+    using:
+      foreign_key_constraint_on: team_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: invitations
+    using:
+      foreign_key_constraint_on:
+        column: group_registration_id
+        table:
+          name: event_invitations
+          schema: public
+  - name: transactionItems
+    using:
+      foreign_key_constraint_on:
+        column: group_registration_id
+        table:
+          name: event_transaction_items
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - group_id
+        - id
+        - status
+        - team_id
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - group_id
+        - id
+        - status
+        - team_id
+        - updated_at
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+event_triggers:
+  - name: event_group_registration_inserted
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/tournament-event-registration'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET

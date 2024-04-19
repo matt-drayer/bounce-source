@@ -1,0 +1,4 @@
+table:
+  name: coach_qualification_statuses
+  schema: public
+is_enum: true

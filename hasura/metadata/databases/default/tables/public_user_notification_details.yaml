@@ -1,0 +1,32 @@
+table:
+  name: user_notification_details
+  schema: public
+object_relationships:
+  - name: primaryEntity
+    using:
+      foreign_key_constraint_on: user_notification_entity_id
+array_relationships:
+  - name: userNotifications
+    using:
+      foreign_key_constraint_on:
+        column: user_notification_detail_id
+        table:
+          name: user_notifications
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - action_type
+        - user_notification_entity_id
+      filter:
+        _and:
+          - userNotifications:
+              user_id:
+                _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true

@@ -1,0 +1,332 @@
+table:
+  name: events
+  schema: public
+object_relationships:
+  - name: city
+    using:
+      foreign_key_constraint_on: city_id
+  - name: contactDetails
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_contact_details
+          schema: public
+  - name: hostUser
+    using:
+      foreign_key_constraint_on: host_user_id
+  - name: hostUserProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          host_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: pickleballRatingScale
+    using:
+      foreign_key_constraint_on: pickleball_rating_scale_id
+  - name: tennisRatingScale
+    using:
+      foreign_key_constraint_on: tennis_rating_scale_id
+  - name: venue
+    using:
+      foreign_key_constraint_on: venue_id
+array_relationships:
+  - name: courts
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_courts
+          schema: public
+  - name: faqs
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_faqs
+          schema: public
+  - name: groups
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_groups
+          schema: public
+  - name: invitations
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_invitations
+          schema: public
+  - name: listingFees
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_listing_fees
+          schema: public
+  - name: registrations
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_registrations
+          schema: public
+  - name: sponsors
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_sponsors
+          schema: public
+  - name: transactions
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          name: event_transactions
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - address_string
+        - archived_at
+        - ball_custom_name
+        - ball_type
+        - cancel_reason
+        - canceled_at
+        - city_id
+        - city_string
+        - country_string
+        - cover_image_file_name
+        - cover_image_file_type
+        - cover_image_host
+        - cover_image_original_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - display_location
+        - end_date
+        - end_date_time
+        - external_url
+        - geometry
+        - group_format
+        - has_prizes
+        - host_user_id
+        - id
+        - is_external
+        - is_rating_required
+        - is_register_off_platform
+        - is_sanctioned
+        - latitude
+        - locale
+        - longitude
+        - organizer_image_file_name
+        - organizer_image_file_type
+        - organizer_image_host
+        - organizer_image_original_file_name
+        - organizer_image_path
+        - organizer_image_provider
+        - organizer_image_provider_url
+        - organizer_image_url
+        - pickleball_rating_scale_id
+        - privacy
+        - prize_description
+        - published_at
+        - region_string
+        - registration_closed_at
+        - registration_deadline_date
+        - registration_deadline_date_time
+        - registration_open_date
+        - registration_open_date_time
+        - registration_price_unit_amount
+        - scoring_format
+        - show_in_public_date
+        - show_in_public_date_time
+        - slug
+        - source_organizer_title
+        - source_registration_count
+        - sport
+        - start_date
+        - start_date_time
+        - status
+        - street_primary_string
+        - street_secondary_string
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - updated_at
+        - venue_id
+        - zipcode_string
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - address_string
+        - archived_at
+        - ball_custom_name
+        - ball_type
+        - cancel_reason
+        - canceled_at
+        - city_id
+        - city_string
+        - country_string
+        - cover_image_file_name
+        - cover_image_file_type
+        - cover_image_host
+        - cover_image_original_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_url
+        - cover_image_url
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - display_location
+        - end_date
+        - end_date_time
+        - external_url
+        - geometry
+        - group_format
+        - has_prizes
+        - host_user_id
+        - id
+        - is_external
+        - is_rating_required
+        - is_register_off_platform
+        - is_sanctioned
+        - latitude
+        - locale
+        - longitude
+        - organizer_image_file_name
+        - organizer_image_file_type
+        - organizer_image_host
+        - organizer_image_original_file_name
+        - organizer_image_path
+        - organizer_image_provider
+        - organizer_image_provider_url
+        - organizer_image_url
+        - pickleball_rating_scale_id
+        - privacy
+        - prize_description
+        - published_at
+        - region_string
+        - registration_closed_at
+        - registration_deadline_date
+        - registration_deadline_date_time
+        - registration_open_date
+        - registration_open_date_time
+        - registration_price_unit_amount
+        - scoring_format
+        - show_in_public_date
+        - show_in_public_date_time
+        - slug
+        - source
+        - source_organizer_title
+        - source_registration_count
+        - sport
+        - start_date
+        - start_date_time
+        - status
+        - street_primary_string
+        - street_secondary_string
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - type
+        - updated_at
+        - venue_id
+        - zipcode_string
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 500
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - address_string
+        - ball_custom_name
+        - ball_type
+        - city_id
+        - city_string
+        - country_string
+        - cover_image_file_name
+        - cover_image_file_type
+        - cover_image_host
+        - cover_image_original_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_url
+        - cover_image_url
+        - currency
+        - deleted_at
+        - description
+        - end_date
+        - external_url
+        - geometry
+        - group_format
+        - has_prizes
+        - is_rating_required
+        - is_sanctioned
+        - latitude
+        - locale
+        - longitude
+        - organizer_image_file_name
+        - organizer_image_file_type
+        - organizer_image_host
+        - organizer_image_original_file_name
+        - organizer_image_path
+        - organizer_image_provider
+        - organizer_image_provider_url
+        - organizer_image_url
+        - pickleball_rating_scale_id
+        - privacy
+        - prize_description
+        - region_string
+        - registration_deadline_date
+        - registration_deadline_date_time
+        - registration_open_date
+        - registration_open_date_time
+        - registration_price_unit_amount
+        - scoring_format
+        - sport
+        - start_date
+        - start_date_time
+        - street_primary_string
+        - street_secondary_string
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_offset_minutes
+        - title
+        - venue_id
+        - zipcode_string
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - host_user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

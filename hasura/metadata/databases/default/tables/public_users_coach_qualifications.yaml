@@ -1,0 +1,54 @@
+table:
+  name: users_coach_qualifications
+  schema: public
+object_relationships:
+  - name: qualification
+    using:
+      foreign_key_constraint_on: coach_qualification_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - coach_qualification_id
+        - status
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - status
+        - created_at
+        - deleted_at
+        - updated_at
+        - coach_qualification_id
+        - id
+        - user_id
+      filter: {}
+      limit: 20
+  - role: user
+    permission:
+      columns:
+        - status
+        - created_at
+        - deleted_at
+        - updated_at
+        - coach_qualification_id
+        - id
+        - user_id
+      filter: {}
+      limit: 20
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - status
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

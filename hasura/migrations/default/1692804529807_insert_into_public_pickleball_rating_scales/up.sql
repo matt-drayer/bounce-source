@@ -1,0 +1,1 @@
+INSERT INTO "public"."pickleball_rating_scales"("order", "maximum", "minimum", "name", "short_name", "created_at", "deleted_at", "updated_at", "id") VALUES (0, 8, 2, E'Dynamic Universal Pickleball Rating', E'DUPR', E'2023-08-23T15:28:49.834195+00:00', null, E'2023-08-23T15:28:49.834195+00:00', E'2ad43a55-8b8b-4ed0-ac01-2de596ccb0b7');

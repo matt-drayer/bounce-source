@@ -1,0 +1,62 @@
+table:
+  name: event_listing_fees
+  schema: public
+object_relationships:
+  - name: creditCard
+    using:
+      foreign_key_constraint_on: user_credit_card_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: user_id
+  - name: customerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+  - name: paymentIntentExternal
+    using:
+      foreign_key_constraint_on: external_stripe_payment_intent_id
+  - name: paymentIntentInternal
+    using:
+      foreign_key_constraint_on: internal_stripe_payment_intent_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - order_subtotal_unit_amount
+        - order_total_unit_amount
+        - paid_unit_amount
+        - refund_unit_amount
+        - external_stripe_payment_intent_id
+        - payment_processor
+        - refunded_by_persona
+        - status
+        - stripe_customer_id
+        - stripe_payment_status
+        - created_at
+        - deleted_at
+        - refunded_at
+        - updated_at
+        - event_id
+        - id
+        - internal_stripe_payment_intent_id
+        - user_credit_card_id
+        - user_id
+      filter:
+        _and:
+          - deleted_at:
+              _is_null: true
+          - event:
+              host_user_id:
+                _eq: X-Hasura-User-Id
+          - user_id:
+              _eq: X-Hasura-User-Id
+      limit: 50
+    comment: ""

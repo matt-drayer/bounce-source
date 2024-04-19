@@ -1,0 +1,365 @@
+We use a modern Next.js/React/TypeScript/Tailwind/HeadlessUI stack.
+
+DO NOT use any colors from the default tailwind colors (ex. text-zinc-800). This is essential. We have a strong design system that we follow.
+Instead, use our tokens text-color-text-lightmode-primary for the default text color (DO NOT USE THE PRIMITIVE NAMES, USE THE DESIIGN SYSTEM TOKENS).
+
+Use the `typography-...` classes for font sizes, weights, etc.
+
+Include darkmode `dark:` variants of colors.
+
+AVOID AT ALL COSTS, tailwind arbitrary values, ex. <span className="top-[117px]">
+
+Example of our style content (DO NOT ACTUALLY BUILD THIS, IT IS JUST AN EXAMPLE):
+<div className="bg-color-bg-lightmode-primary dark:color-bg-darkmode-primary">
+  <h2 className="typography-product-heading text-color-text-lightmode-primary dark:text-color-text-darkmode-primary">
+    Page title
+  </h2>
+  <div className="border border-color-border-input-lightmode dark:border-color-border-input-lightmode rounded bg-color-bg-lightmode-secondary dark:bg-color-bg-darkmode-secondary">
+    ... section content ...
+  </div>
+  <div className={classNames(isActive ? 'text-color-text-brand' : 'text-color-text-lightmode-primary dark:text-color-text-darkmode-primary')}>
+    text...
+  </div>
+</div>
+
+Below is our design system.
+
+Our custom colors:
+{
+  "paletteBrandGray": {
+    "name": "brand-gray",
+    "colors": {
+      "0": "#FFFFFF",
+      "25": "#F7F7F8",
+      "50": "#F2F2F3",
+      "100": "#E7E7E9",
+      "200": "#DADADD",
+      "300": "#B9B9BE",
+      "400": "#98989F",
+      "500": "#6E6D76",
+      "600": "#4E4D54",
+      "700": "#3B3A40",
+      "800": "#242429",
+      "900": "#18181B",
+      "1000": "#0F0F10"
+    }
+  },
+  "paletteBrandFire": {
+    "name": "brand-fire",
+    "colors": {
+      "50": "#FEF9F6",
+      "100": "#FDEEE2",
+      "200": "#FFD3B8",
+      "300": "#FAB494",
+      "400": "#FF8861",
+      "500": "#FF5C33",
+      "600": "#F54519",
+      "700": "#B83014",
+      "800": "#7F2010",
+      "900": "#4F170C"
+    }
+  },
+...
+
+Tailwind config colors:
+const textColors = {
+  'color-text-brand': paletteBrandFire.colors[500],
+  // Lightmode
+  'color-text-lightmode-primary': paletteBrandGray.colors[900],
+  'color-text-lightmode-secondary': paletteBrandGray.colors[600],
+  'color-text-lightmode-tertiary': paletteBrandGray.colors[400],
+  'color-text-lightmode-inactive': paletteBrandGray.colors[200],
+  'color-text-lightmode-invert': paletteBrandGray.colors[25],
+  'color-text-lightmode-placeholder': paletteBrandGray.colors[500],
+  'color-text-lightmode-disabled': paletteBrandGray.colors[200],
+  'color-text-lightmode-icon': paletteBrandGray.colors[400],
+  'color-text-lightmode-error': paletteBrandRed.colors[500],
+  // Darkmode
+  'color-text-darkmode-primary': paletteBrandGray.colors[25],
+  'color-text-darkmode-secondary': paletteBrandGray.colors[200],
+  'color-text-darkmode-tertiary': paletteBrandGray.colors[400],
+  'color-text-darkmode-inactive': paletteBrandGray.colors[400],
+  'color-text-darkmode-invert': paletteBrandGray.colors[900],
+  'color-text-darkmode-placeholder': paletteBrandGray.colors[300],
+  'color-text-darkmode-disabled': paletteBrandGray.colors[600],
+  'color-text-darkmode-icon': paletteBrandGray.colors[400],
+  'color-text-darkmode-error': paletteBrandRed.colors[500],
+};
+
+const surfaceColors = {
+  // Lightmode
+  'color-bg-lightmode-primary': paletteBrandGray.colors[0],
+  'color-bg-lightmode-secondary': paletteBrandGray.colors[50],
+  'color-bg-lightmode-tertiary': paletteBrandGray.colors[25],
+  'color-bg-lightmode-highlighted': paletteBrandGray.colors[100],
+  'color-bg-lightmode-invert': paletteBrandGray.colors[1000],
+  'color-bg-lightmode-brand': paletteBrandFire.colors[500],
+  'color-bg-lightmode-brand-secondary': paletteBrandFire.colors[50],
+  'color-bg-lightmode-inactive': paletteBrandGray.colors[100],
+  'color-bg-lightmode-section': paletteBrandGray.colors[50],
+  'color-bg-input-lightmode-primary': paletteBrandGray.colors[50],
+  'color-bg-lightmode-icon': paletteBrandGray.colors[300],
+  'color-bg-lightmode-icon-error': paletteBrandRed.colors[500],
+  'color-bg-lightmode-error': paletteBrandRed.colors[100],
+  'color-bg-lightmode-error-secondary': paletteBrandRed.colors[400],
+  // Darkmode
+  'color-bg-darkmode-primary': paletteBrandGray.colors[1000],
+  'color-bg-darkmode-secondary': paletteBrandGray.colors[800],
+  'color-bg-darkmode-tertiary': paletteBrandGray.colors[800],
+  'color-bg-darkmode-highlighted': paletteBrandGray.colors[500],
+  'color-bg-darkmode-invert': paletteBrandGray.colors[0],
+  'color-bg-darkmode-brand': paletteBrandFire.colors[500],
+  'color-bg-darkmode-brand-secondary': paletteBrandFire.colors[900],
+  'color-bg-input-darkmode-primary': paletteBrandGray.colors[800],
+  'color-bg-darkmode-icon': paletteBrandGray.colors[500],
+  'color-bg-darkmode-icon-error': paletteBrandRed.colors[500],
+  'color-bg-darkmode-error': paletteBrandRed.colors[900],
+  'color-bg-darkmode-error-secondary': paletteBrandRed.colors[700],
+  // Backward compatability & surface misc
+  'color-checkbox-active': paletteBrandFire.colors[500],
+};
+
+const borderColors = {
+  'color-border-brand': paletteBrandFire.colors[500],
+  //Lightmode
+  'color-border-input-lightmode': paletteBrandGray.colors[100],
+  'color-border-card-lightmode': paletteBrandGray.colors[50],
+  //Darkmode
+  'color-border-input-darkmode': paletteBrandGray.colors[700],
+  'color-border-card-darkmode': paletteBrandGray.colors[800],
+};
+
+const buttonSurfaceColors = {
+  'color-button-brand-primary': paletteBrandGray.colors[1000],
+  'color-button-fire': paletteBrandFire.colors[500],
+  'color-button-darkmode': paletteBrandGray.colors[0],
+  'color-button-lightmode': paletteBrandGray.colors[1000],
+};
+const buttonTextColors = {};
+
+const appColors = {
+  // Brand
+  'color-brand-primary': paletteBrandFire.colors[500],
+  'color-brand-secondary': paletteBrandFire.colors[400],
+  'color-brand-heavy': paletteBrandFire.colors[700],
+  'color-brand-active': paletteBrandFire.colors[100],
+  'color-tab-active': paletteBrandFire.colors[500],
+  'color-brand-highlight': paletteBrandFire.colors[500],
+  'color-brand-background': paletteBrandFire.colors[50],
+  // Status
+  'color-success': paletteBrandGreen.colors[400],
+  'color-success-background': paletteBrandGreen.colors[100],
+  'color-error': paletteBrandRed.colors[500],
+  // Misc
+  'color-connections': paletteBrandBlue.colors[500],
+  'color-lesson-individual': paletteBrandFire.colors[100],
+  'color-lesson-cardio': paletteBrandFire.colors[200],
+  'color-lesson-clinic': paletteBrandSeaBlue.colors[200],
+  'color-lesson-camp': paletteBrandGreen.colors[200],
+  'color-lesson-other': paletteBrandPurple.colors[200],
+};
+
+
+And typography tailwind:
+      fontSize: {
+        '2xs': ['10px', '12px'],
+        //
+        // Typography Product
+        'size-product-display': ['2rem', '150%'],
+        'size-product-heading-desktop': ['1.5rem', '150%'],
+        'size-product-heading-mobile': ['1.25rem', '120%'],
+        'size-product-heading-compact-desktop': ['1.25rem', '120%'],
+        'size-product-subheading': ['1rem', '150%'],
+        'size-product-body-highlight': ['1rem', '150%'],
+        'size-product-button-label-large': ['1rem', '120%'],
+        'size-product-button-label-medium': ['1rem', '120%'],
+        'size-product-body': ['1rem', '150%'],
+        'size-product-button-label-small': ['0.875rem', '120%'],
+        'size-product-link': ['0.875rem', '150%'],
+        'size-product-element-label': ['0.875rem', '150%'],
+        'size-product-caption': ['0.875rem', '1.125rem'],
+        'size-product-button-label-xs': ['0.75rem', '120%'],
+        'size-product-chips-filters': ['0.75rem', '150%'],
+        'size-product-text-card': ['0.75rem', '1rem'],
+        'size-product-tabbar-mobile': ['0.625rem', '0.75rem'],
+        //
+        // Typography Informative
+        'size-informative-display-desktop': ['4rem', '120%'],
+        'size-informative-display-mobile': ['2rem', '150%'],
+        'size-informative-subheading': ['1.5rem', '120%'],
+        'size-informative-body-highlight': ['1rem', '150%'],
+        'size-informative-button-label': ['1rem', '150%'],
+        'size-informative-body': ['1rem', '150%'],
+        'size-informative-caption-highlight': ['0.875rem', '150%'],
+        'size-informative-caption': ['0.875rem', 'normal'],
+      },
+
+
+Typography design system classes (note you should use the combined desktop+mobile version if they are compound).
+
+/* Product Typography */
+@layer components {
+  /* Prod/Display */
+  .typography-product-display {
+    @apply text-size-product-display font-bold italic;
+  }
+
+  /* Prod/Heading D */
+  .typography-product-heading-desktop {
+    @apply text-size-product-heading-desktop font-bold;
+  }
+
+  /* Prod/Heading M */
+  .typography-product-heading-mobile {
+    @apply text-size-product-heading-mobile font-bold;
+  }
+
+  /* Combined responsive Prod/Heading D and M */
+  .typography-product-heading {
+    @apply typography-product-heading-mobile lg:typography-product-heading-desktop;
+  }
+
+  /* Prod/Heading D compact */
+  .typography-product-heading-compact-desktop {
+    @apply text-size-product-heading-compact-desktop font-bold;
+  }
+
+  /* Combined responsive Prod/Heading D and M (M not built yet) */
+  .typography-product-heading-compact {
+    @apply typography-product-heading-compact-desktop;
+  }
+
+  /* Prod/Subheading */
+  .typography-product-subheading {
+    @apply text-size-product-subheading font-bold;
+  }
+
+  /* Prod/Body highlight */
+  .typography-product-body-highlight {
+    @apply text-size-product-body-highlight font-medium;
+  }
+
+  /* Prod/Button label L M */
+  .typography-product-button-label-large {
+    @apply text-size-product-button-label-large font-medium;
+  }
+
+  /* Prod/Button label L M */
+  .typography-product-button-label-medium {
+    @apply text-size-product-button-label-medium font-medium;
+  }
+
+  /* Prod/Body */
+  .typography-product-body {
+    @apply text-size-product-body;
+  }
+
+  /* Prod/Button label S */
+  .typography-product-button-label-small {
+    @apply text-size-product-button-label-small font-medium;
+  }
+
+  /* Prod/Link */
+  .typography-product-link {
+    @apply text-size-product-link font-medium;
+  }
+
+  /* Prod/Element label */
+  .typography-product-element-label {
+    @apply text-size-product-element-label font-medium;
+  }
+
+  /* Prod/Caption */
+  .typography-product-caption {
+    @apply text-size-product-caption;
+  }
+
+  /* Prod/Button label XS */
+  .typography-product-button-label-xs {
+    @apply text-size-product-button-label-xs font-medium;
+  }
+
+  /* Prod/Chips, Filters */
+  .typography-product-chips-filters {
+    @apply text-size-product-chips-filters font-medium;
+  }
+
+  /* Prod/Text in cards */
+  .typography-product-text-card {
+    @apply text-size-product-text-card;
+  }
+
+  /* Prod/Tabbar Mobile */
+  .typography-product-tabbar-mobile {
+    @apply text-size-product-tabbar-mobile;
+  }
+}
+
+/* Informative Typography */
+@layer components {
+  /* Inf/Display primary Desktop */
+  .typography-informative-display-primary-desktop {
+    @apply text-size-informative-display-desktop font-bold italic;
+  }
+
+  /* Inf/Display primary Mobile */
+  .typography-informative-display-primary-mobile {
+    @apply text-size-informative-display-mobile font-bold italic;
+  }
+
+  /* Combined responsive Inf/Display primary Desktop and Mobile */
+  .typography-informative-display-primary {
+    @apply typography-informative-display-primary-mobile lg:typography-informative-display-primary-desktop;
+  }
+
+  /* Inf/Display secondary Desktop */
+  .typography-informative-display-secondary-desktop {
+    @apply text-size-informative-display-desktop;
+  }
+
+  /* Inf/Display secondary Mobile */
+  .typography-informative-display-secondary-mobile {
+    @apply text-size-informative-display-mobile;
+  }
+
+  /* Combined responsive Inf/Display secondary Desktop and Mobile */
+  .typography-informative-display-secondary {
+    @apply typography-informative-display-secondary-mobile lg:typography-informative-display-secondary-desktop;
+  }
+
+  /* Inf/Subheading */
+  .typography-informative-subheading {
+    @apply text-size-informative-subheading;
+  }
+
+  /* Inf/Body highlight */
+  .typography-informative-body-highlight {
+    @apply text-size-informative-body-highlight font-medium;
+  }
+
+  /* Inf/Button label */
+  .typography-informative-button-label {
+    @apply text-size-informative-button-label font-medium italic;
+  }
+
+  /* Inf/Body */
+  .typography-informative-body {
+    @apply text-size-informative-body;
+  }
+
+  /* Inf/Caption highlight */
+  .typography-informative-caption-highlight {
+    @apply text-size-informative-caption-highlight font-medium;
+  }
+
+  /* Inf/Caption */
+  .typography-informative-caption {
+    @apply text-size-informative-caption;
+  }
+}
+
+Additional essential notes:
+- Use typescript
+- Break into components logically when possible
+- Use props
+- Make interactive

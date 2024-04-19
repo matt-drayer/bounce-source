@@ -1,0 +1,198 @@
+table:
+  name: user_profiles
+  schema: public
+object_relationships:
+  - name: activeCity
+    using:
+      manual_configuration:
+        column_mapping:
+          active_city_id: id
+        insertion_order: null
+        remote_table:
+          name: cities
+          schema: public
+  - name: country
+    using:
+      manual_configuration:
+        column_mapping:
+          country_id: id
+        insertion_order: null
+        remote_table:
+          name: countries
+          schema: public
+  - name: countrySubdivision
+    using:
+      manual_configuration:
+        column_mapping:
+          country_subdivision_id: id
+        insertion_order: null
+        remote_table:
+          name: country_subdivisions
+          schema: public
+  - name: normalizedTennisRatingScale
+    using:
+      manual_configuration:
+        column_mapping:
+          normalized_tennis_rating_scale_id: id
+        insertion_order: null
+        remote_table:
+          name: tennis_rating_scales
+          schema: public
+  - name: pickleballSkillLevel
+    using:
+      manual_configuration:
+        column_mapping:
+          pickleball_skill_level_id: id
+        insertion_order: null
+        remote_table:
+          name: skill_levels
+          schema: public
+  - name: tennisRatingScale
+    using:
+      manual_configuration:
+        column_mapping:
+          tennis_rating_scale_id: id
+        insertion_order: null
+        remote_table:
+          name: tennis_rating_scales
+          schema: public
+  - name: tennisSkillLevel
+    using:
+      manual_configuration:
+        column_mapping:
+          tennis_skill_level_id: id
+        insertion_order: null
+        remote_table:
+          name: skill_levels
+          schema: public
+array_relationships:
+  - name: coachLessons
+    using:
+      manual_configuration:
+        column_mapping:
+          id: owner_user_id
+        insertion_order: null
+        remote_table:
+          name: lessons
+          schema: public
+  - name: coachQualifications
+    using:
+      manual_configuration:
+        column_mapping:
+          id: user_id
+        insertion_order: null
+        remote_table:
+          name: users_coach_qualifications
+          schema: public
+  - name: coachServices
+    using:
+      manual_configuration:
+        column_mapping:
+          id: user_id
+        insertion_order: null
+        remote_table:
+          name: user_coach_services
+          schema: public
+  - name: followers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: followed_user_id
+        insertion_order: null
+        remote_table:
+          name: user_follows
+          schema: public
+  - name: following
+    using:
+      manual_configuration:
+        column_mapping:
+          id: follower_user_id
+        insertion_order: null
+        remote_table:
+          name: user_follows
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - about_me
+        - about_me_video_url
+        - active_city_id
+        - city_name
+        - coach_experience_set_at
+        - coach_experience_years
+        - coach_status
+        - country_id
+        - country_subdivision_id
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_url
+        - created_at
+        - default_sport
+        - deleted_at
+        - dupr_id
+        - event_organizer_account_type
+        - full_name
+        - gender
+        - gender_preference
+        - id
+        - normalized_tennis_rating
+        - normalized_tennis_rating_scale_id
+        - pickleball_skill_level_id
+        - preferred_name
+        - profile_image_file_name
+        - profile_image_path
+        - profile_image_provider
+        - profile_image_provider_url
+        - tennis_rating
+        - tennis_rating_scale_id
+        - tennis_skill_level_id
+        - updated_at
+        - username
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200
+  - role: user
+    permission:
+      columns:
+        - about_me
+        - about_me_video_url
+        - active_city_id
+        - city_name
+        - coach_experience_set_at
+        - coach_experience_years
+        - coach_status
+        - country_id
+        - country_subdivision_id
+        - cover_image_file_name
+        - cover_image_path
+        - cover_image_provider
+        - cover_image_provider_url
+        - created_at
+        - default_sport
+        - deleted_at
+        - dupr_id
+        - event_organizer_account_type
+        - full_name
+        - gender
+        - gender_preference
+        - id
+        - normalized_tennis_rating
+        - normalized_tennis_rating_scale_id
+        - pickleball_skill_level_id
+        - preferred_name
+        - profile_image_file_name
+        - profile_image_path
+        - profile_image_provider
+        - profile_image_provider_url
+        - tennis_rating
+        - tennis_rating_scale_id
+        - tennis_skill_level_id
+        - updated_at
+        - username
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 200

@@ -1,0 +1,63 @@
+table:
+  name: event_registrations
+  schema: public
+object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+  - name: registrationDetails
+    using:
+      foreign_key_constraint_on:
+        column: event_registration_id
+        table:
+          name: event_registration_details
+          schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  - name: userProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+array_relationships:
+  - name: transactionItems
+    using:
+      foreign_key_constraint_on:
+        column: registration_id
+        table:
+          name: event_transaction_items
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - event_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 100
+    comment: ""

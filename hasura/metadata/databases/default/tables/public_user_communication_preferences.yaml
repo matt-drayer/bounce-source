@@ -1,0 +1,74 @@
+table:
+  name: user_communication_preferences
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - new_follower_email
+        - new_follower_push
+        - marketing_email
+        - marketing_push
+        - lesson_reminder_email
+        - lesson_reminder_push
+        - payout_email
+        - payout_push
+        - lesson_booked_email
+        - lesson_booked_push
+        - participant_left_lesson_email
+        - participant_left_lesson_push
+        - new_lesson_published_email
+        - new_lesson_published_push
+        - lesson_canceled_email
+        - lesson_canceled_pushed
+        - play_session_canceled_email
+        - play_session_canceled_push
+        - play_session_reminder_email
+        - play_session_reminder_push
+        - play_session_participant_joined_email
+        - play_session_participant_joined_push
+        - play_session_participant_left_email
+        - play_session_participant_left_push
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - lesson_booked_email
+        - lesson_booked_push
+        - lesson_canceled_email
+        - lesson_canceled_pushed
+        - lesson_reminder_email
+        - lesson_reminder_push
+        - marketing_email
+        - marketing_push
+        - new_follower_email
+        - new_follower_push
+        - new_lesson_published_email
+        - new_lesson_published_push
+        - participant_left_lesson_email
+        - participant_left_lesson_push
+        - payout_email
+        - payout_push
+        - play_session_canceled_email
+        - play_session_canceled_push
+        - play_session_participant_joined_email
+        - play_session_participant_joined_push
+        - play_session_participant_left_email
+        - play_session_participant_left_push
+        - play_session_reminder_email
+        - play_session_reminder_push
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null

@@ -1,0 +1,259 @@
+table:
+  name: play_sessions
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: organizer
+    using:
+      foreign_key_constraint_on: organizer_user_id
+  - name: organizerProfile
+    using:
+      manual_configuration:
+        column_mapping:
+          organizer_user_id: id
+        insertion_order: null
+        remote_table:
+          name: user_profiles
+          schema: public
+  - name: pickleballRatingScale
+    using:
+      foreign_key_constraint_on: pickleball_rating_scale_id
+  - name: tennisRatingScale
+    using:
+      foreign_key_constraint_on: tennis_rating_scale_id
+  - name: userCustomCourt
+    using:
+      foreign_key_constraint_on: user_custom_court_id
+  - name: venue
+    using:
+      foreign_key_constraint_on: venue_id
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: play_session_id
+        table:
+          name: play_session_comments
+          schema: public
+  - name: groupsPlaySessions
+    using:
+      foreign_key_constraint_on:
+        column: play_session_id
+        table:
+          name: groups_play_sessions
+          schema: public
+  - name: participants
+    using:
+      foreign_key_constraint_on:
+        column: play_session_id
+        table:
+          name: play_session_participants
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        organizer_user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - cancel_reason
+        - competitiveness
+        - court_booking_status
+        - currency
+        - description
+        - end_date_time
+        - extra_racket_count
+        - format
+        - group_id
+        - is_bringing_net
+        - locale
+        - organizer_user_id
+        - participant_limit
+        - pickleball_rating_scale_id
+        - price_unit_amount
+        - privacy
+        - published_at
+        - skill_rating_maximum
+        - skill_rating_minimum
+        - sport
+        - start_date_time
+        - status
+        - target_skill_level
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - updated_at
+        - user_custom_court_id
+        - venue_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - competitiveness
+        - court_booking_status
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - end_date_time
+        - extra_racket_count
+        - format
+        - group_id
+        - id
+        - is_bringing_net
+        - locale
+        - organizer_user_id
+        - participant_limit
+        - pickleball_rating_scale_id
+        - price_unit_amount
+        - privacy
+        - published_at
+        - reminder_event_id
+        - skill_rating_maximum
+        - skill_rating_minimum
+        - sport
+        - start_date_time
+        - status
+        - target_skill_level
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - updated_at
+        - user_custom_court_id
+        - venue_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - competitiveness
+        - court_booking_status
+        - created_at
+        - currency
+        - deleted_at
+        - description
+        - end_date_time
+        - extra_racket_count
+        - format
+        - group_id
+        - id
+        - is_bringing_net
+        - locale
+        - organizer_user_id
+        - participant_limit
+        - pickleball_rating_scale_id
+        - price_unit_amount
+        - privacy
+        - published_at
+        - reminder_event_id
+        - skill_rating_maximum
+        - skill_rating_minimum
+        - sport
+        - start_date_time
+        - status
+        - target_skill_level
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - updated_at
+        - user_custom_court_id
+        - venue_id
+      filter:
+        deleted_at:
+          _is_null: true
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - cancel_reason
+        - canceled_at
+        - competitiveness
+        - court_booking_status
+        - currency
+        - description
+        - end_date_time
+        - extra_racket_count
+        - format
+        - group_id
+        - is_bringing_net
+        - locale
+        - organizer_user_id
+        - participant_limit
+        - pickleball_rating_scale_id
+        - price_unit_amount
+        - privacy
+        - published_at
+        - skill_rating_maximum
+        - skill_rating_minimum
+        - sport
+        - start_date_time
+        - status
+        - target_skill_level
+        - tennis_rating_scale_id
+        - timezone_abbreviation
+        - timezone_name
+        - timezone_offset_minutes
+        - title
+        - user_custom_court_id
+        - venue_id
+      filter:
+        _and:
+          - organizer_user_id:
+              _eq: X-Hasura-User-Id
+          - deleted_at:
+              _is_null: true
+      check: null
+event_triggers:
+  - name: play_session_details_updated
+    definition:
+      enable_manual: false
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/play-session-details-updated'
+    headers:
+      - name: webhook-secret
+        value: WEBHOOK_SECRET
+  - name: play_session_reminder_create
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - start_date_time
+          - status
+    retry_conf:
+      interval_sec: 10
+      num_retries: 2
+      timeout_sec: 60
+    webhook: '{{HASURA_WEBHOOK_URL}}/tournament-event-registration'
+    headers:
+      - name: webhook-secret
+        value_from_env: WEBHOOK_SECRET
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60

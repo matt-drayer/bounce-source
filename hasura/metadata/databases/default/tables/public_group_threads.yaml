@@ -1,0 +1,59 @@
+table:
+  name: group_threads
+  schema: public
+object_relationships:
+  - name: creator
+    using:
+      foreign_key_constraint_on: user_id
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: group_thread_id
+        table:
+          name: group_thread_comments
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - group:
+              members:
+                user_id:
+                  _eq: X-Hasura-User-Id
+      columns:
+        - group_id
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - deleted_at
+        - group_id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 10
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - deleted_at
+        - updated_at
+        - group_id
+        - id
+        - user_id
+      filter:
+        deleted_at:
+          _is_null: true
+      limit: 50

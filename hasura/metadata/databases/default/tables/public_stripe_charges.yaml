@@ -1,0 +1,19 @@
+table:
+  name: stripe_charges
+  schema: public
+object_relationships:
+  - name: paymentIntentExternal
+    using:
+      foreign_key_constraint_on: external_stripe_payment_intent_id
+  - name: paymentIntentInternal
+    using:
+      foreign_key_constraint_on: internal_stripe_payment_intent_id
+  - name: paymentMethodUsed
+    using:
+      manual_configuration:
+        column_mapping:
+          payment_method: provider_card_id
+        insertion_order: null
+        remote_table:
+          name: user_credit_cards
+          schema: public

@@ -1,0 +1,17 @@
+table:
+  name: play_session_privacy
+  schema: public
+is_enum: true
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - value
+        - description
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - description
+        - value
+      filter: {}

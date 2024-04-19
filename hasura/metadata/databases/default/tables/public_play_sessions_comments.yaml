@@ -1,0 +1,3 @@
+table:
+  name: play_sessions_comments
+  schema: public

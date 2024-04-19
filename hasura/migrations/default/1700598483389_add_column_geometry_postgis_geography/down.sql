@@ -1,0 +1,6 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- ALTER TABLE countries ADD COLUMN geometry GEOGRAPHY(POINT, 4326);
+-- ALTER TABLE country_subdivisions ADD COLUMN geometry GEOGRAPHY(POINT, 4326);
+-- ALTER TABLE cities ADD COLUMN geometry GEOGRAPHY(POINT, 4326);
+-- ALTER TABLE venues ADD COLUMN geometry GEOGRAPHY(POINT, 4326);
